@@ -1,0 +1,787 @@
+#!/usr/bin/env node
+
+/**
+ * Build script for One File Tools.
+ *
+ * Reads tools.json and generates index.html with 5 switchable design layouts.
+ * Zero npm dependencies - runs with plain Node.js.
+ *
+ * Usage:
+ *   node scripts/build.js
+ *
+ * Cloudflare Pages build command:
+ *   node scripts/build.js
+ */
+
+const fs = require("fs");
+const path = require("path");
+
+const rootDir = path.join(__dirname, "..");
+
+// ──────────────────────────────────────────────
+// Load data
+// ──────────────────────────────────────────────
+
+const data = JSON.parse(fs.readFileSync(path.join(rootDir, "data", "tools.json"), "utf-8"));
+const { site, categories, tools } = data;
+
+// Quests registry is optional — build should not fail if it doesn't exist yet.
+const questsPath = path.join(rootDir, "data", "quests.json");
+const questsDataRaw = fs.existsSync(questsPath) ? JSON.parse(fs.readFileSync(questsPath, "utf-8")) : { categories: [], quests: [] };
+const questCategories = questsDataRaw.categories || [];
+const quests = questsDataRaw.quests || [];
+
+// Quizzes registry is optional — build should not fail if it doesn't exist yet.
+const quizzesPath = path.join(rootDir, "data", "quizzes.json");
+const quizzesDataRaw = fs.existsSync(quizzesPath) ? JSON.parse(fs.readFileSync(quizzesPath, "utf-8")) : { categories: [], quizzes: [] };
+const quizCategories = quizzesDataRaw.categories || [];
+const quizzes = quizzesDataRaw.quizzes || [];
+
+// Design System registry is optional — build should not fail if it doesn't exist yet.
+const dsPath = path.join(rootDir, "data", "design-system.json");
+const dsDataRaw = fs.existsSync(dsPath) ? JSON.parse(fs.readFileSync(dsPath, "utf-8")) : { categories: [], designs: [] };
+const dsCategories = dsDataRaw.categories || [];
+const designs = dsDataRaw.designs || [];
+
+// Instruments registry is optional — build should not fail if it doesn't exist yet.
+const instrumentsPath = path.join(rootDir, "data", "instruments.json");
+const instrumentsDataRaw = fs.existsSync(instrumentsPath) ? JSON.parse(fs.readFileSync(instrumentsPath, "utf-8")) : { categories: [], instruments: [] };
+const instrumentCategories = instrumentsDataRaw.categories || [];
+const instruments = instrumentsDataRaw.instruments || [];
+
+// ──────────────────────────────────────────────
+// Helpers
+// ──────────────────────────────────────────────
+
+function escapeHtml(str) {
+  return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
+function escapeAttr(str) {
+  return escapeHtml(str);
+}
+
+/**
+ * Minimal Markdown-to-HTML converter.
+ */
+function markdownToHtml(md) {
+  if (!md) return "";
+  const lines = md.split("\n");
+  let html = "";
+  let inCodeBlock = false;
+  let inList = false;
+  let listType = "";
+  let paragraph = [];
+
+  function flushParagraph() {
+    if (paragraph.length > 0) {
+      html += "<p>" + inlineMarkdown(paragraph.join(" ")) + "</p>\n";
+      paragraph = [];
+    }
+  }
+
+  function closeList() {
+    if (inList) {
+      html += listType === "ul" ? "</ul>\n" : "</ol>\n";
+      inList = false;
+      listType = "";
+    }
+  }
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (line.trimStart().startsWith("```")) {
+      if (!inCodeBlock) {
+        flushParagraph();
+        closeList();
+        inCodeBlock = true;
+        html += "<pre><code>";
+      } else {
+        inCodeBlock = false;
+        html += "</code></pre>\n";
+      }
+      continue;
+    }
+    if (inCodeBlock) {
+      html += escapeHtml(line) + "\n";
+      continue;
+    }
+    const trimmed = line.trim();
+    if (trimmed === "") {
+      flushParagraph();
+      closeList();
+      continue;
+    }
+    const headerMatch = trimmed.match(/^(#{1,6})\s+(.+)$/);
+    if (headerMatch) {
+      flushParagraph();
+      closeList();
+      const level = headerMatch[1].length;
+      html += `<h${level}>${inlineMarkdown(headerMatch[2])}</h${level}>\n`;
+      continue;
+    }
+    if (trimmed.match(/^[-*+]\s+/)) {
+      flushParagraph();
+      if (!inList || listType !== "ul") {
+        closeList();
+        html += "<ul>\n";
+        inList = true;
+        listType = "ul";
+      }
+      html += "<li>" + inlineMarkdown(trimmed.replace(/^[-*+]\s+/, "")) + "</li>\n";
+      continue;
+    }
+    if (trimmed.match(/^\d+\.\s+/)) {
+      flushParagraph();
+      if (!inList || listType !== "ol") {
+        closeList();
+        html += "<ol>\n";
+        inList = true;
+        listType = "ol";
+      }
+      html += "<li>" + inlineMarkdown(trimmed.replace(/^\d+\.\s+/, "")) + "</li>\n";
+      continue;
+    }
+    paragraph.push(trimmed);
+  }
+  flushParagraph();
+  closeList();
+  if (inCodeBlock) html += "</code></pre>\n";
+  return html;
+}
+
+function inlineMarkdown(text) {
+  return escapeHtml(text)
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*([^*]+)\*/g, "<em>$1</em>")
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+}
+
+function thumbnailExists(toolId) {
+  return fs.existsSync(path.join(rootDir, "tools", toolId + ".png"));
+}
+
+function questThumbnailExists(questId) {
+  return fs.existsSync(path.join(rootDir, "quests", questId + ".png"));
+}
+
+function quizThumbnailExists(quizId) {
+  return fs.existsSync(path.join(rootDir, "quizzes", quizId + ".png"));
+}
+
+function dsThumbnailExists(dsId) {
+  return fs.existsSync(path.join(rootDir, "design-system", dsId + ".png"));
+}
+
+function instrumentThumbnailExists(instrumentId) {
+  return fs.existsSync(path.join(rootDir, "instruments", instrumentId + ".png"));
+}
+
+// ──────────────────────────────────────────────
+// Build tool data
+// ──────────────────────────────────────────────
+
+const categoryMap = {};
+categories.forEach((c) => {
+  categoryMap[c.id] = c;
+});
+
+const toolsData = tools.map((tool) => ({
+  id: tool.id,
+  name: tool.name,
+  shortDescription: tool.shortDescription,
+  longDescriptionHtml: markdownToHtml(tool.longDescription),
+  category: tool.category,
+  categoryName: categoryMap[tool.category]?.name || tool.category,
+  categoryIcon: categoryMap[tool.category]?.icon || "",
+  tags: tool.tags || [],
+  techStack: tool.techStack || [],
+  difficulty: tool.difficulty || "Easy",
+  status: tool.status || "idea",
+  hasThumbnail: thumbnailExists(tool.id),
+  file: `tools/${tool.id}.html`,
+  thumbnail: `tools/${tool.id}.png`,
+  github: `${site.github}/blob/main/tools/${tool.id}.html`,
+  live: `${site.url}/tools/${tool.id}`
+}));
+
+// Group tools by category
+const toolsByCategory = {};
+categories.forEach((c) => {
+  toolsByCategory[c.id] = toolsData.filter((t) => t.category === c.id);
+});
+
+const liveCount = tools.filter((t) => t.status === "live").length;
+const totalCount = tools.length;
+
+// Collect all unique tags across all tools
+const allTags = [...new Set(tools.flatMap((t) => t.tags || []))].sort();
+
+// ──────────────────────────────────────────────
+// Build quest data
+// ──────────────────────────────────────────────
+
+const questCategoryMap = {};
+questCategories.forEach((c) => {
+  questCategoryMap[c.id] = c;
+});
+
+const questsDataBuilt = quests.map((q) => ({
+  id: q.id,
+  name: q.name,
+  shortDescription: q.shortDescription,
+  longDescriptionHtml: markdownToHtml(q.longDescription),
+  category: q.category,
+  categoryName: questCategoryMap[q.category]?.name || q.category,
+  categoryIcon: questCategoryMap[q.category]?.icon || "",
+  tags: q.tags || [],
+  techStack: q.techStack || [],
+  difficulty: q.difficulty || "Easy",
+  status: q.status || "idea",
+  hasThumbnail: questThumbnailExists(q.id),
+  file: `quests/${q.id}.html`,
+  thumbnail: `quests/${q.id}.png`,
+  github: `${site.github}/blob/main/quests/${q.id}.html`,
+  live: `${site.url}/quests/${q.id}`
+}));
+
+const totalQuestCount = questsDataBuilt.length;
+
+const questCountByCategory = {};
+questCategories.forEach((c) => { questCountByCategory[c.id] = 0; });
+questsDataBuilt.forEach((q) => { if (questCountByCategory[q.category] !== undefined) questCountByCategory[q.category]++; });
+
+// ──────────────────────────────────────────────
+// Build quiz data
+// ──────────────────────────────────────────────
+
+const quizCategoryMap = {};
+quizCategories.forEach((c) => {
+  quizCategoryMap[c.id] = c;
+});
+
+const quizzesDataBuilt = quizzes.map((q) => ({
+  id: q.id,
+  name: q.name,
+  shortDescription: q.shortDescription,
+  longDescriptionHtml: markdownToHtml(q.longDescription),
+  category: q.category,
+  categoryName: quizCategoryMap[q.category]?.name || q.category,
+  categoryIcon: quizCategoryMap[q.category]?.icon || "",
+  tags: q.tags || [],
+  techStack: q.techStack || [],
+  difficulty: q.difficulty || "Easy",
+  status: q.status || "idea",
+  hasThumbnail: quizThumbnailExists(q.id),
+  file: `quizzes/${q.id}.html`,
+  thumbnail: `quizzes/${q.id}.png`,
+  github: `${site.github}/blob/main/quizzes/${q.id}.html`,
+  live: `${site.url}/quizzes/${q.id}`
+}));
+
+const totalQuizCount = quizzesDataBuilt.length;
+
+const quizCountByCategory = {};
+quizCategories.forEach((c) => { quizCountByCategory[c.id] = 0; });
+quizzesDataBuilt.forEach((q) => { if (quizCountByCategory[q.category] !== undefined) quizCountByCategory[q.category]++; });
+
+// ──────────────────────────────────────────────
+// Build design-system data
+// ──────────────────────────────────────────────
+
+const dsCategoryMap = {};
+dsCategories.forEach((c) => {
+  dsCategoryMap[c.id] = c;
+});
+
+const dsDataBuilt = designs.map((d) => ({
+  id: d.id,
+  name: d.name,
+  shortDescription: d.shortDescription,
+  longDescriptionHtml: markdownToHtml(d.longDescription),
+  category: d.category,
+  categoryName: dsCategoryMap[d.category]?.name || d.category,
+  categoryIcon: dsCategoryMap[d.category]?.icon || "",
+  tags: d.tags || [],
+  techStack: d.techStack || [],
+  frameworks: d.frameworks || [],
+  difficulty: d.difficulty || "Easy",
+  status: d.status || "idea",
+  hasThumbnail: dsThumbnailExists(d.id),
+  file: `design-system/${d.id}.html`,
+  thumbnail: `design-system/${d.id}.png`,
+  github: `${site.github}/blob/main/design-system/${d.id}.html`,
+  live: `${site.url}/design-system/${d.id}`
+}));
+
+const totalDsCount = dsDataBuilt.length;
+
+const dsCountByCategory = {};
+dsCategories.forEach((c) => { dsCountByCategory[c.id] = 0; });
+dsDataBuilt.forEach((d) => { if (dsCountByCategory[d.category] !== undefined) dsCountByCategory[d.category]++; });
+
+// ──────────────────────────────────────────────
+// Build instruments data
+// ──────────────────────────────────────────────
+
+const instrumentCategoryMap = {};
+instrumentCategories.forEach((c) => {
+  instrumentCategoryMap[c.id] = c;
+});
+
+const instrumentsDataBuilt = instruments.map((inst) => ({
+  id: inst.id,
+  name: inst.name,
+  shortDescription: inst.shortDescription,
+  longDescriptionHtml: markdownToHtml(inst.longDescription),
+  category: inst.category,
+  categoryName: instrumentCategoryMap[inst.category]?.name || inst.category,
+  categoryIcon: instrumentCategoryMap[inst.category]?.icon || "",
+  tags: inst.tags || [],
+  techStack: inst.techStack || [],
+  difficulty: inst.difficulty || "Easy",
+  status: inst.status || "idea",
+  hasThumbnail: instrumentThumbnailExists(inst.id),
+  file: `instruments/${inst.id}.html`,
+  thumbnail: `instruments/${inst.id}.png`,
+  github: `${site.github}/blob/main/instruments/${inst.id}.html`,
+  live: `${site.url}/instruments/${inst.id}`
+}));
+
+const totalInstrumentCount = instrumentsDataBuilt.length;
+
+const instrumentCountByCategory = {};
+instrumentCategories.forEach((c) => { instrumentCountByCategory[c.id] = 0; });
+instrumentsDataBuilt.forEach((inst) => { if (instrumentCountByCategory[inst.category] !== undefined) instrumentCountByCategory[inst.category]++; });
+
+// ──────────────────────────────────────────────
+// Template-based index.html generation
+// ──────────────────────────────────────────────
+
+// ──────────────────────────────────────────────
+// Read template & generate static HTML
+// ──────────────────────────────────────────────
+
+const templatePath = path.join(__dirname, "index-template.txt");
+const template = fs.readFileSync(templatePath, "utf-8");
+
+// Count tools by category for pill labels
+const countByCategory = {};
+categories.forEach((c) => { countByCategory[c.id] = 0; });
+toolsData.forEach((t) => { if (countByCategory[t.category] !== undefined) countByCategory[t.category]++; });
+
+// ── Build pillar cards (static HTML) ──
+
+function buildPillarCards() {
+  const pillars = [
+    {
+      id: "tools",
+      title: "One File Tools",
+      count: totalCount + " tools and counting",
+      desc: "CSS generators, JSON utilities, SEO helpers, Developer tools, and more.",
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.1-.4-.4-2.1z"/></svg>'
+    },
+    {
+      id: "resume",
+      title: "One File Resume",
+      count: resumeThemes.length + " theme" + (resumeThemes.length === 1 ? "" : "s"),
+      desc: "ATS-friendly resume themes from a single JSON file. Zero JS, A4 print-ready.",
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>'
+    },
+    {
+      id: "portfolio",
+      title: "One File Portfolio",
+      count: portfolioThemes.length + " theme" + (portfolioThemes.length === 1 ? "" : "s"),
+      desc: "Developer portfolio themes from a single JSON file. Dark/light, compelling, responsive.",
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg>'
+    },
+    {
+      id: "quests",
+      title: "One File Quests",
+      count: totalQuestCount + " quest" + (totalQuestCount === 1 ? "" : "s"),
+      desc: "Interactive, gamified lessons to learn General dev skills, Git, CSS, JS, and CLI workflows by doing.",
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg>'
+    },
+    {
+      id: "quizzes",
+      title: "One File Quizzes",
+      count: totalQuizCount + " quiz" + (totalQuizCount === 1 ? "" : "zes"),
+      desc: "Quick multiple-choice challenges to test your Git, CSS, JS, and general knowledge.",
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>'
+    },
+    {
+      id: "design-system",
+      title: "One File Design System",
+      count: totalDsCount + " design" + (totalDsCount === 1 ? "" : "s"),
+      desc: "Premium UI showcases \u2014 dashboards, landing pages, and components built with CSS frameworks and JS libraries via CDN.",
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>'
+    },
+    {
+      id: "instruments",
+      title: "One File Instruments",
+      count: totalInstrumentCount + " instrument" + (totalInstrumentCount === 1 ? "" : "s"),
+      desc: "Real, playable musical tools \u2014 synthesizers, drum machines, chord libraries, and ear trainers, in a single HTML file.",
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>'
+    },
+    {
+      id: "soon",
+      title: "More coming soon\u2026",
+      count: "Contribute on GitHub",
+      desc: "New pillars and ideas are always welcome.",
+      muted: true,
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg>'
+    }
+  ];
+
+  return pillars.map((p) => {
+    if (p.muted) {
+      return '          <div class="pillar is-muted" aria-disabled="true">' +
+        '<span class="p-icon" aria-hidden="true">' + p.icon + '</span>' +
+        '<h3>' + escapeHtml(p.title) + '</h3>' +
+        '<p>' + escapeHtml(p.desc) + ' Contribute on GitHub!</p>' +
+        '<span class="p-count">' + escapeHtml(p.count) + '</span></div>';
+    }
+    const pressed = p.id === "tools" ? "true" : "false";
+    return '          <button class="pillar" type="button" data-pillar="' + escapeAttr(p.id) + '" aria-pressed="' + pressed + '">' +
+      '<span class="p-icon" aria-hidden="true">' + p.icon + '</span>' +
+      '<h3>' + escapeHtml(p.title) + '</h3>' +
+      '<p>' + escapeHtml(p.desc) + '</p>' +
+      '<span class="p-count">' + escapeHtml(p.count) + '</span></button>';
+  }).join("\n");
+}
+
+// ── Build filter pills (static HTML) ──
+
+function buildFilterPills() {
+  const pills = ['              <button class="pill" type="button" data-cat="all" aria-pressed="true"><span class="pi" aria-hidden="true">\u25A6</span> All <span class="pill-count">(' + totalCount + ')</span></button>'];
+  categories.forEach((c) => {
+    const count = countByCategory[c.id] || 0;
+    if (count === 0) return;
+    pills.push('              <button class="pill" type="button" data-cat="' + escapeAttr(c.id) + '" aria-pressed="false"><span class="pi" aria-hidden="true">' + c.icon + '</span> ' + escapeHtml(c.name) + ' <span class="pill-count">(' + count + ')</span></button>');
+  });
+  return pills.join("\n");
+}
+
+// ── Build tool cards (static HTML) ──
+
+function buildToolCards() {
+  return toolsData.map((t) => {
+    const cat = categoryMap[t.category];
+    const diff = t.difficulty.toLowerCase();
+    const searchData = (t.name + " " + t.shortDescription + " " + t.tags.join(" ")).toLowerCase();
+    const liveUrl = site.url + "/tools/" + t.id;
+
+    const thumbHtml = t.hasThumbnail
+      ? '<img class="card-thumb" src="tools/' + escapeAttr(t.id) + '.png" alt="' + escapeAttr(t.name) + '" loading="lazy" />'
+      : '<div class="card-thumb-placeholder">' + (cat ? cat.icon : '') + '</div>';
+
+    return '            <article class="card" data-id="' + escapeAttr(t.id) + '" data-category="' + escapeAttr(t.category) + '" data-search="' + escapeAttr(searchData) + '" tabindex="0" role="button" aria-label="View details for ' + escapeAttr(t.name) + '">' +
+      thumbHtml +
+      '<div class="card-body">' +
+      '<div class="card-top"><h4>' + escapeHtml(t.name) + '</h4>' +
+      '<span class="badge-cat"><span aria-hidden="true">' + (cat ? cat.icon : '') + '</span> ' + escapeHtml(t.categoryName) + '</span></div>' +
+      '<p class="desc">' + escapeHtml(t.shortDescription) + '</p>' +
+      '<div class="path mono">tools/' + escapeHtml(t.id) + '.html</div>' +
+      '<div class="card-foot">' +
+      '<span class="badge-diff ' + diff + '">' + escapeHtml(t.difficulty) + '</span>' +
+      '<span class="card-links">' +
+      '<a class="link-btn primary" href="' + escapeAttr(liveUrl) + '" target="_blank" rel="noopener noreferrer" data-nomodal>Live <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>' +
+      '</span></div></div></article>';
+  }).join("\n");
+}
+
+// ── Build quest filter pills (static HTML) ──
+
+function buildQuestFilterPills() {
+  const pills = ['              <button class="pill" type="button" data-cat="all" aria-pressed="true"><span class="pi" aria-hidden="true">\u25A6</span> All <span class="pill-count">(' + totalQuestCount + ')</span></button>'];
+  questCategories.forEach((c) => {
+    const count = questCountByCategory[c.id] || 0;
+    if (count === 0) return;
+    pills.push('              <button class="pill" type="button" data-cat="' + escapeAttr(c.id) + '" aria-pressed="false"><span class="pi" aria-hidden="true">' + c.icon + '</span> ' + escapeHtml(c.name) + ' <span class="pill-count">(' + count + ')</span></button>');
+  });
+  return pills.join("\n");
+}
+
+// ── Build quest cards (static HTML) ──
+
+function buildQuestCards() {
+  return questsDataBuilt.map((q) => {
+    const cat = questCategoryMap[q.category];
+    const diff = q.difficulty.toLowerCase();
+    const searchData = (q.name + " " + q.shortDescription + " " + q.tags.join(" ")).toLowerCase();
+    const liveUrl = site.url + "/quests/" + q.id;
+
+    const thumbHtml = q.hasThumbnail
+      ? '<img class="card-thumb" src="quests/' + escapeAttr(q.id) + '.png" alt="' + escapeAttr(q.name) + '" loading="lazy" />'
+      : '<div class="card-thumb-placeholder">' + (cat ? cat.icon : '') + '</div>';
+
+    return '            <article class="card" data-id="' + escapeAttr(q.id) + '" data-category="' + escapeAttr(q.category) + '" data-search="' + escapeAttr(searchData) + '" tabindex="0" role="button" aria-label="View details for ' + escapeAttr(q.name) + '">' +
+      thumbHtml +
+      '<div class="card-body">' +
+      '<div class="card-top"><h4>' + escapeHtml(q.name) + '</h4>' +
+      '<span class="badge-cat"><span aria-hidden="true">' + (cat ? cat.icon : '') + '</span> ' + escapeHtml(q.categoryName) + '</span></div>' +
+      '<p class="desc">' + escapeHtml(q.shortDescription) + '</p>' +
+      '<div class="path mono">quests/' + escapeHtml(q.id) + '.html</div>' +
+      '<div class="card-foot">' +
+      '<span class="badge-diff ' + diff + '">' + escapeHtml(q.difficulty) + '</span>' +
+      '<span class="card-links">' +
+      '<a class="link-btn primary" href="' + escapeAttr(liveUrl) + '" target="_blank" rel="noopener noreferrer" data-nomodal>Start Quest <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>' +
+      '</span></div></div></article>';
+  }).join("\n");
+}
+
+// ── Build quiz filter pills (static HTML) ──
+
+function buildQuizFilterPills() {
+  const pills = ['              <button class="pill" type="button" data-cat="all" aria-pressed="true"><span class="pi" aria-hidden="true">\u25A6</span> All <span class="pill-count">(' + totalQuizCount + ')</span></button>'];
+  quizCategories.forEach((c) => {
+    const count = quizCountByCategory[c.id] || 0;
+    if (count === 0) return;
+    pills.push('              <button class="pill" type="button" data-cat="' + escapeAttr(c.id) + '" aria-pressed="false"><span class="pi" aria-hidden="true">' + c.icon + '</span> ' + escapeHtml(c.name) + ' <span class="pill-count">(' + count + ')</span></button>');
+  });
+  return pills.join("\n");
+}
+
+// ── Build quiz cards (static HTML) ──
+
+function buildQuizCards() {
+  return quizzesDataBuilt.map((q) => {
+    const cat = quizCategoryMap[q.category];
+    const diff = q.difficulty.toLowerCase();
+    const searchData = (q.name + " " + q.shortDescription + " " + q.tags.join(" ")).toLowerCase();
+    const liveUrl = site.url + "/quizzes/" + q.id;
+
+    const thumbHtml = q.hasThumbnail
+      ? '<img class="card-thumb" src="quizzes/' + escapeAttr(q.id) + '.png" alt="' + escapeAttr(q.name) + '" loading="lazy" />'
+      : '<div class="card-thumb-placeholder">' + (cat ? cat.icon : '') + '</div>';
+
+    return '            <article class="card" data-id="' + escapeAttr(q.id) + '" data-category="' + escapeAttr(q.category) + '" data-search="' + escapeAttr(searchData) + '" tabindex="0" role="button" aria-label="View details for ' + escapeAttr(q.name) + '">' +
+      thumbHtml +
+      '<div class="card-body">' +
+      '<div class="card-top"><h4>' + escapeHtml(q.name) + '</h4>' +
+      '<span class="badge-cat"><span aria-hidden="true">' + (cat ? cat.icon : '') + '</span> ' + escapeHtml(q.categoryName) + '</span></div>' +
+      '<p class="desc">' + escapeHtml(q.shortDescription) + '</p>' +
+      '<div class="path mono">quizzes/' + escapeHtml(q.id) + '.html</div>' +
+      '<div class="card-foot">' +
+      '<span class="badge-diff ' + diff + '">' + escapeHtml(q.difficulty) + '</span>' +
+      '<span class="card-links">' +
+      '<a class="link-btn primary" href="' + escapeAttr(liveUrl) + '" target="_blank" rel="noopener noreferrer" data-nomodal>Start Quiz <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>' +
+      '</span></div></div></article>';
+  }).join("\n");
+}
+
+// ── Build design-system filter pills (static HTML) ──
+
+function buildDsFilterPills() {
+  const pills = ['              <button class="pill" type="button" data-cat="all" aria-pressed="true"><span class="pi" aria-hidden="true">▦</span> All <span class="pill-count">(' + totalDsCount + ')</span></button>'];
+  dsCategories.forEach((c) => {
+    const count = dsCountByCategory[c.id] || 0;
+    if (count === 0) return;
+    pills.push('              <button class="pill" type="button" data-cat="' + escapeAttr(c.id) + '" aria-pressed="false"><span class="pi" aria-hidden="true">' + c.icon + '</span> ' + escapeHtml(c.name) + ' <span class="pill-count">(' + count + ')</span></button>');
+  });
+  return pills.join("\n");
+}
+
+// ── Build design-system cards (static HTML) ──
+
+function buildDsCards() {
+  return dsDataBuilt.map((d) => {
+    const cat = dsCategoryMap[d.category];
+    const diff = d.difficulty.toLowerCase();
+    const searchData = (d.name + " " + d.shortDescription + " " + d.tags.join(" ") + " " + d.frameworks.join(" ")).toLowerCase();
+    const liveUrl = site.url + "/design-system/" + d.id;
+
+    const thumbHtml = d.hasThumbnail
+      ? '<img class="card-thumb" src="design-system/' + escapeAttr(d.id) + '.png" alt="' + escapeAttr(d.name) + '" loading="lazy" />'
+      : '<div class="card-thumb-placeholder">' + (cat ? cat.icon : '') + '</div>';
+
+    const frameworkBadges = d.frameworks.length
+      ? '<div class="card-frameworks">' + d.frameworks.map((f) => '<span class="badge-fw">' + escapeHtml(f) + '</span>').join('') + '</div>'
+      : '';
+
+    return '            <article class="card" data-id="' + escapeAttr(d.id) + '" data-category="' + escapeAttr(d.category) + '" data-search="' + escapeAttr(searchData) + '" tabindex="0" role="button" aria-label="View details for ' + escapeAttr(d.name) + '">' +
+      thumbHtml +
+      '<div class="card-body">' +
+      '<div class="card-top"><h4>' + escapeHtml(d.name) + '</h4>' +
+      '<span class="badge-cat"><span aria-hidden="true">' + (cat ? cat.icon : '') + '</span> ' + escapeHtml(d.categoryName) + '</span></div>' +
+      '<p class="desc">' + escapeHtml(d.shortDescription) + '</p>' +
+      frameworkBadges +
+      '<div class="path mono">design-system/' + escapeHtml(d.id) + '.html</div>' +
+      '<div class="card-foot">' +
+      '<span class="badge-diff ' + diff + '">' + escapeHtml(d.difficulty) + '</span>' +
+      '<span class="card-links">' +
+      '<a class="link-btn primary" href="' + escapeAttr(liveUrl) + '" target="_blank" rel="noopener noreferrer" data-nomodal>Preview <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>' +
+      '</span></div></div></article>';
+  }).join("\n");
+}
+
+// ── Build instrument filter pills (static HTML) ──
+
+function buildInstrumentFilterPills() {
+  const pills = ['              <button class="pill" type="button" data-cat="all" aria-pressed="true"><span class="pi" aria-hidden="true">\u25A6</span> All <span class="pill-count">(' + totalInstrumentCount + ')</span></button>'];
+  instrumentCategories.forEach((c) => {
+    const count = instrumentCountByCategory[c.id] || 0;
+    if (count === 0) return;
+    pills.push('              <button class="pill" type="button" data-cat="' + escapeAttr(c.id) + '" aria-pressed="false"><span class="pi" aria-hidden="true">' + c.icon + '</span> ' + escapeHtml(c.name) + ' <span class="pill-count">(' + count + ')</span></button>');
+  });
+  return pills.join("\n");
+}
+
+// ── Build instrument cards (static HTML) ──
+
+function buildInstrumentCards() {
+  return instrumentsDataBuilt.map((inst) => {
+    const cat = instrumentCategoryMap[inst.category];
+    const diff = inst.difficulty.toLowerCase();
+    const searchData = (inst.name + " " + inst.shortDescription + " " + inst.tags.join(" ")).toLowerCase();
+    const liveUrl = site.url + "/instruments/" + inst.id;
+
+    const thumbHtml = inst.hasThumbnail
+      ? '<img class="card-thumb" src="instruments/' + escapeAttr(inst.id) + '.png" alt="' + escapeAttr(inst.name) + '" loading="lazy" />'
+      : '<div class="card-thumb-placeholder">' + (cat ? cat.icon : '') + '</div>';
+
+    return '            <article class="card" data-id="' + escapeAttr(inst.id) + '" data-category="' + escapeAttr(inst.category) + '" data-search="' + escapeAttr(searchData) + '" tabindex="0" role="button" aria-label="View details for ' + escapeAttr(inst.name) + '">' +
+      thumbHtml +
+      '<div class="card-body">' +
+      '<div class="card-top"><h4>' + escapeHtml(inst.name) + '</h4>' +
+      '<span class="badge-cat"><span aria-hidden="true">' + (cat ? cat.icon : '') + '</span> ' + escapeHtml(inst.categoryName) + '</span></div>' +
+      '<p class="desc">' + escapeHtml(inst.shortDescription) + '</p>' +
+      '<div class="path mono">instruments/' + escapeHtml(inst.id) + '.html</div>' +
+      '<div class="card-foot">' +
+      '<span class="badge-diff ' + diff + '">' + escapeHtml(inst.difficulty) + '</span>' +
+      '<span class="card-links">' +
+      '<a class="link-btn primary" href="' + escapeAttr(liveUrl) + '" target="_blank" rel="noopener noreferrer" data-nomodal>Play <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>' +
+      '</span></div></div></article>';
+  }).join("\n");
+}
+
+// ── Build resume/portfolio showcase cards (static HTML) ──
+
+function buildThemeCard(t, glyph) {
+  const screenshotHtml = t.hasScreenshot
+    ? '<img class="tc-screenshot" src="' + escapeAttr(t.screenshot) + '" alt="' + escapeAttr(t.name) + ' theme screenshot" loading="lazy" />'
+    : '<div class="tc-screenshot-placeholder">' + glyph + '</div>';
+  return '            <article class="theme-card">' +
+    screenshotHtml +
+    '<div class="tc-body">' +
+    '<div class="tc-head"><span class="tc-glyph" aria-hidden="true">' + glyph + '</span><h4>' + escapeHtml(t.name) + '</h4></div>' +
+    '<div class="path mono">' + escapeHtml(t.file) + '</div>' +
+    '<p>' + escapeHtml(t.description) + '</p>' +
+    '<a class="preview-btn" href="' + escapeAttr(t.file) + '" target="_blank" rel="noopener noreferrer">Preview <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>' +
+    '</div></article>';
+}
+
+function buildResumeCards() {
+  const glyph = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>';
+  return resumeThemes.map((t) => buildThemeCard(t, glyph)).join("\n");
+}
+
+function buildPortfolioCards() {
+  const glyph = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>';
+  return portfolioThemes.map((t) => buildThemeCard(t, glyph)).join("\n");
+}
+
+// Resume & portfolio theme data from themes.json
+// Convention: [pillar]/themes/[id].hbs is the template, [id].png is the screenshot, [id].html is the output
+const themesData = JSON.parse(fs.readFileSync(path.join(rootDir, "data", "themes.json"), "utf-8"));
+function mapTheme(pillar) {
+  return function (t) {
+    var base = pillar + "/" + t.id;
+    return {
+      ...t,
+      file: base + ".html",
+      screenshot: base + ".png",
+      hasScreenshot: fs.existsSync(path.join(rootDir, base + ".png"))
+    };
+  };
+}
+const resumeThemes = themesData.resume.map(mapTheme("resume"));
+const portfolioThemes = themesData.portfolio.map(mapTheme("portfolio"));
+
+// Build JSON data for the script block (used by modal + search)
+const siteJson = JSON.stringify({ title: site.title, tagline: site.tagline, url: site.url, github: site.github });
+const categoriesJson = JSON.stringify(categories.map((c) => ({ id: c.id, name: c.name, icon: c.icon })));
+const toolsJson = JSON.stringify(toolsData.map((t) => ({
+  id: t.id, name: t.name, shortDescription: t.shortDescription, longDescription: tools.find((x) => x.id === t.id)?.longDescription || "",
+  category: t.category, tags: t.tags, techStack: t.techStack, difficulty: t.difficulty
+})));
+const resumeThemesJson = JSON.stringify(resumeThemes);
+const portfolioThemesJson = JSON.stringify(portfolioThemes);
+const questsJson = JSON.stringify(questsDataBuilt.map((q) => ({
+  id: q.id, name: q.name, shortDescription: q.shortDescription, longDescription: quests.find((x) => x.id === q.id)?.longDescription || "",
+  category: q.category, tags: q.tags, techStack: q.techStack, difficulty: q.difficulty
+})));
+const questCategoriesJson = JSON.stringify(questCategories.map((c) => ({ id: c.id, name: c.name, icon: c.icon })));
+const quizzesJson = JSON.stringify(quizzesDataBuilt.map((q) => ({
+  id: q.id, name: q.name, shortDescription: q.shortDescription, longDescription: quizzes.find((x) => x.id === q.id)?.longDescription || "",
+  category: q.category, tags: q.tags, techStack: q.techStack, difficulty: q.difficulty
+})));
+const quizCategoriesJson = JSON.stringify(quizCategories.map((c) => ({ id: c.id, name: c.name, icon: c.icon })));
+const dsJson = JSON.stringify(dsDataBuilt.map((d) => ({
+  id: d.id, name: d.name, shortDescription: d.shortDescription, longDescription: designs.find((x) => x.id === d.id)?.longDescription || "",
+  category: d.category, tags: d.tags, techStack: d.techStack, frameworks: d.frameworks, difficulty: d.difficulty
+})));
+const dsCategoriesJson = JSON.stringify(dsCategories.map((c) => ({ id: c.id, name: c.name, icon: c.icon })));
+const instrumentsJson = JSON.stringify(instrumentsDataBuilt.map((inst) => ({
+  id: inst.id, name: inst.name, shortDescription: inst.shortDescription, longDescription: instruments.find((x) => x.id === inst.id)?.longDescription || "",
+  category: inst.category, tags: inst.tags, techStack: inst.techStack, difficulty: inst.difficulty
+})));
+const instrumentCategoriesJson = JSON.stringify(instrumentCategories.map((c) => ({ id: c.id, name: c.name, icon: c.icon })));
+
+// ── Inject into template ──
+
+let html = template
+  .replace(/\{\{SITE_URL\}\}/g, escapeAttr(site.url))
+  .replace(/\{\{GITHUB_URL\}\}/g, escapeAttr(site.github))
+  .replace(/\{\{AUTHOR_URL\}\}/g, escapeAttr(site.author.url))
+  .replace(/\{\{AUTHOR_NAME\}\}/g, escapeHtml(site.author.name))
+  .replace(/\{\{SSOC_URL\}\}/g, escapeAttr(site.ssoc.url))
+  .replace(/\{\{YEAR\}\}/g, new Date().getFullYear().toString())
+  .replace(/\{\{TOOL_COUNT\}\}/g, String(totalCount))
+  .replace(/\{\{QUEST_COUNT\}\}/g, String(totalQuestCount))
+  .replace("{{PILLAR_CARDS}}", buildPillarCards())
+  .replace("{{FILTER_PILLS}}", buildFilterPills())
+  .replace("{{TOOL_CARDS}}", buildToolCards())
+  .replace("{{RESUME_CARDS}}", buildResumeCards())
+  .replace("{{PORTFOLIO_CARDS}}", buildPortfolioCards())
+  .replace("{{QUEST_FILTER_PILLS}}", buildQuestFilterPills())
+  .replace("{{QUEST_CARDS}}", buildQuestCards())
+  .replace(/\{\{QUIZ_COUNT\}\}/g, String(totalQuizCount))
+  .replace("{{QUIZ_FILTER_PILLS}}", buildQuizFilterPills())
+  .replace("{{QUIZ_CARDS}}", buildQuizCards())
+  .replace(/\{\{DS_COUNT\}\}/g, String(totalDsCount))
+  .replace("{{DS_FILTER_PILLS}}", buildDsFilterPills())
+  .replace("{{DS_CARDS}}", buildDsCards())
+  .replace(/\{\{INSTRUMENT_COUNT\}\}/g, String(totalInstrumentCount))
+  .replace("{{INSTRUMENT_FILTER_PILLS}}", buildInstrumentFilterPills())
+  .replace("{{INSTRUMENT_CARDS}}", buildInstrumentCards())
+  .replace("{{SITE_JSON}}", siteJson)
+  .replace("{{CATEGORIES_JSON}}", categoriesJson)
+  .replace("{{TOOLS_JSON}}", toolsJson)
+  .replace("{{RESUME_THEMES_JSON}}", resumeThemesJson)
+  .replace("{{PORTFOLIO_THEMES_JSON}}", portfolioThemesJson)
+  .replace("{{QUESTS_JSON}}", questsJson)
+  .replace("{{QUEST_CATEGORIES_JSON}}", questCategoriesJson)
+  .replace("{{QUIZZES_JSON}}", quizzesJson)
+  .replace("{{QUIZ_CATEGORIES_JSON}}", quizCategoriesJson)
+  .replace("{{DS_JSON}}", dsJson)
+  .replace("{{DS_CATEGORIES_JSON}}", dsCategoriesJson)
+  .replace("{{INSTRUMENTS_JSON}}", instrumentsJson)
+  .replace("{{INSTRUMENT_CATEGORIES_JSON}}", instrumentCategoriesJson);
+
+// ──────────────────────────────────────────────
+// Write output
+// ──────────────────────────────────────────────
+
+const outPath = path.join(rootDir, "index.html");
+fs.writeFileSync(outPath, html, "utf-8");
+
+console.log("Built index.html successfully.");
+console.log("  " + totalCount + " tools across " + categories.length + " categories (" + liveCount + " live, " + (totalCount - liveCount) + " ideas)");
+console.log("  " + totalQuestCount + " quests across " + questCategories.length + " categories");
+console.log("  " + totalQuizCount + " quizzes across " + quizCategories.length + " categories");
+console.log("  " + totalDsCount + " designs across " + dsCategories.length + " categories");
+console.log("  " + totalInstrumentCount + " instruments across " + instrumentCategories.length + " categories");
+console.log("  Template: " + templatePath);
+console.log("  Output: " + outPath);
