@@ -1,0 +1,78 @@
+{
+    "resume": [
+        {
+            "id": "classic",
+            "name": "Classic",
+            "description": "Clean single-column layout. ATS-compliant, zero JavaScript, A4 print-ready. System fonts only.",
+            "author": "Aditya Mahajan"
+        },
+        {
+            "id": "cosmic",
+            "name": "Cosmic",
+            "description": "Two-column layout, Immersive starry backdrop, Glowing elements, Monospace typography.",
+            "author": "Aditya Mahajan"
+        },
+        {
+            "id": "cyber",
+            "name": "Cyber",
+            "description": "Two-column layout, Retro-futuristic vibe, Vivid color scheme, Subtle animations.",
+            "author": "Aditya Mahajan"
+        },
+        {
+            "id": "herbarium",
+            "name": "Herbarium",
+            "description": "Two-column layout, Warm linen paper background, Editorial type pairing and dusty plum accents.",
+            "author": "Aditya Mahajan"
+        },
+        {
+            "id": "monotone",
+            "name": "Monotone",
+            "description": "Two-column layout, Black, grey, and white color scheme, Minimalist and clean.",
+            "author": "Aditya Mahajan"
+        },
+        {
+            "id": "resume-opus-5",
+            "name": "Opus 5",
+            "description": "Two-column layout, Rounded card design, Muted teal accent with brass honours, A4 print-ready.",
+            "author": "Aditya Mahajan"
+        }
+    ],
+    "portfolio": [
+        {
+            "id": "desert",
+            "name": "Desert",
+            "description": "An elegant, sandy theme with a golden-beige gradient and bronze accents.",
+            "author": "Aditya Mahajan"
+        },
+        {
+            "id": "developer",
+            "name": "Developer",
+            "description": "Dark developer-focused portfolio with project cards, skills grid, experience timeline, and testimonials.",
+            "author": "Aditya Mahajan"
+        },
+        {
+            "id": "fable",
+            "name": "Fable",
+            "description": "Dark developer-focused portfolio created by Fable.",
+            "author": "Aditya Mahajan"
+        },
+        {
+            "id": "pastel",
+            "name": "Pastel",
+            "description": "A cute and minimalist theme with an animated gradient background and soft color scheme.",
+            "author": "Aditya Mahajan"
+        },
+        {
+            "id": "retro",
+            "name": "Retro",
+            "description": "A CRT-inspired desktop interface with a retro operating system aesthetic.",
+            "author": "Aditya Mahajan"
+        },
+        {
+            "id": "space",
+            "name": "Space",
+            "description": "A dark, futuristic theme with an animated starfield background and monospace typography.",
+            "author": "Aditya Mahajan"
+        }
+    ]
+}

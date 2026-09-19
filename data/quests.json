@@ -1,0 +1,324 @@
+{
+    "categories": [
+        {
+            "id": "css-fundamentals",
+            "name": "CSS Fundamentals",
+            "icon": "🎨",
+            "description": "Box model, specificity, flexbox, and grid, learned by doing"
+        },
+        {
+            "id": "general-dev-quests",
+            "name": "General Dev Quests",
+            "icon": "⌨️",
+            "description": "Cross-cutting developer challenges and CLI-focused drills"
+        },
+        {
+            "id": "git",
+            "name": "Git & Version Control",
+            "icon": "🔀",
+            "description": "Branching, rebasing, and Git workflows explained interactively"
+        },
+        {
+            "id": "js-fundamentals",
+            "name": "JavaScript Fundamentals",
+            "icon": "⚙️",
+            "description": "Closures, async, and core JS concepts through interactive challenges"
+        },
+        {
+            "id": "react-fundamentals",
+            "name": "React Fundamentals",
+            "icon": "⚛️",
+            "description": "Components, state, effects, and reconciliation through interactive challenges"
+        }
+    ],
+    "quests": [
+        {
+            "id": "abyssal-current",
+            "name": "Abyssal Current",
+            "shortDescription": "A bioluminescent deep-sea simulator that teaches CSS @keyframes, animation timing, and easing functions through environmental survival.",
+            "longDescription": "## Abyssal Current\n\nPilot a glowing submersible through pitch-black ocean trenches where the only light comes from CSS animations you construct. Drag keyframe \"buoys\" onto a timeline reel to build `@keyframes` while your sub's bioluminescence animates live.\n\n### Features\n\n- Real-time CSS injection engine updates the game world instantly as you manipulate the timeline.\n- Physical drag-and-drop keyframe buoys representing specific CSS transformations, scale, and hue rotations.\n- Live easing visualizer that demonstrates the mathematical difference between linear and ease-in-out functions using particle currents.\n- Ghost UI hints and survival mechanics: An oxygen/pressure gauge that steadily drains, forcing players to quickly grasp and apply the correct animation sequence to clear the sector.\n- High-fidelity, procedurally animated SVG deep-sea creatures (Jellyfish, Anglerfish, Octopus, Seahorse) that sync with your animation states.\n- Fully responsive layout utilizing raw Vanilla JS and CSS variables, with absolutely zero external frameworks.",
+            "category": "css-fundamentals",
+            "tags": [
+                "animations",
+                "css",
+                "interactive",
+                "keyframes",
+                "survival",
+                "visualizer"
+            ],
+            "techStack": [
+                "CSS3",
+                "HTML5",
+                "SVG",
+                "Vanilla JS"
+            ],
+            "difficulty": "Hard",
+            "status": "live"
+        },
+        {
+            "id": "accessibility-audit-quest",
+            "name": "Accessibility Audit Quest",
+            "shortDescription": "Find and fix accessibility (a11y) issues in broken HTML snippets.",
+            "longDescription": "## Accessibility Audit Quest\n\nAn interactive quest where you play as an accessibility auditor. Find and fix common a11y issues in broken HTML snippets to make the web more inclusive.\n\n### Features\n\n- Multiple levels with broken HTML snippets.\n- Learn to identify and fix issues like missing alt text, improper heading structure, and low contrast.\n- Real-time feedback and explanations.\n- Progress saved locally.",
+            "category": "general-dev-quests",
+            "tags": [
+                "a11y",
+                "accessibility",
+                "audit",
+                "html",
+                "interactive",
+                "quest"
+            ],
+            "techStack": [
+                "CSS3",
+                "HTML5",
+                "LocalStorage API",
+                "Vanilla JS"
+            ],
+            "difficulty": "Medium",
+            "status": "live"
+        },
+        {
+            "id": "branch-navigator",
+            "name": "Branch Navigator",
+            "shortDescription": "A lightweight Git quest (Easy) to learn checkout basics by navigating a commit graph with `git log`, `git branch`, and `git checkout`.",
+            "longDescription": "## Branch Navigator\n\nNavigate a commit graph like a time traveler. Start from the newest commit and use Git commands in an interactive terminal to reach specific commits and branches.\n\n### Features\n\n- 3 easy levels\n- Learn `git log`, `git branch`, and `git checkout`\n- Visual commit graph with HEAD and branch labels\n- Goal-based terminal completion + progress saved locally\n- Fully offline, single-file quest",
+            "category": "git",
+            "tags": [
+                "branching",
+                "checkout",
+                "git",
+                "interactive",
+                "quest",
+                "terminal"
+            ],
+            "techStack": [
+                "CSS3",
+                "HTML5",
+                "LocalStorage API",
+                "SVG",
+                "Vanilla JS"
+            ],
+            "difficulty": "Easy",
+            "status": "live"
+        },
+        {
+            "id": "closure-escape-room",
+            "name": "Closure Escape Room",
+            "shortDescription": "Escape puzzle rooms by solving JavaScript closure, lexical scope, callback, and private state challenges.",
+            "longDescription": "## Closure Escape Room\n\nAn escape-room themed JavaScript quest where every locked door is opened by solving a closure puzzle. Learn how closures capture variables, understand lexical scope, debug common mistakes, and master private state through interactive challenges.\n\n### Features\n\n- 10 progressively challenging escape rooms\n- Learn closures, lexical scope, callbacks, private variables, and data encapsulation\n- Interactive puzzles with real-time feedback and explanations\n- Hint system for difficult challenges\n- Progress saved locally using localStorage\n- Responsive and keyboard accessible\n- Works completely offline",
+            "category": "js-fundamentals",
+            "tags": [
+                "closures",
+                "escape-room",
+                "interactive",
+                "javascript",
+                "lexical-scope",
+                "puzzle",
+                "quest"
+            ],
+            "techStack": [
+                "CSS3",
+                "HTML5",
+                "LocalStorage API",
+                "Vanilla JS"
+            ],
+            "difficulty": "Medium",
+            "status": "live"
+        },
+        {
+            "id": "css-grid-quest",
+            "name": "CSS Grid Quest",
+            "shortDescription": "Master CSS Grid through interactive layout challenges.",
+            "longDescription": "## CSS Grid Quest\n\nAn interactive game to learn CSS Grid through hands-on challenges. Complete progressively difficult levels by selecting the correct CSS Grid properties and receive instant visual feedback.\n\n### Features\n\n- Six progressive levels covering core Grid concepts.\n- Visual grid preview with interactive challenges.\n- Instant feedback and score tracking.\n- Hint system for guided learning.\n- LocalStorage-based progress saving.\n- Responsive design with dark mode support.",
+            "category": "css-fundamentals",
+            "tags": [
+                "challenge",
+                "css",
+                "css-grid",
+                "interactive",
+                "layout"
+            ],
+            "techStack": [
+                "CSS3",
+                "HTML5",
+                "JavaScript",
+                "LocalStorage API",
+                "Vanilla JS"
+            ],
+            "difficulty": "Easy",
+            "status": "live"
+        },
+        {
+            "id": "flexbox-frenzy",
+            "name": "Flexbox Frenzy: The Alignment Heist",
+            "shortDescription": "A heist caper where every vault lock is a Flexbox puzzle — write real CSS to slide gold bars onto their targets, judged live by the browser's own layout engine, scored on how few properties you use.",
+            "longDescription": "## Flexbox Frenzy: The Alignment Heist\n\nCrack vaults by solving Flexbox puzzles. Ghostly target outlines show where the gold bars must end up; you write real CSS on the container to slide them into position, and when every bar overlaps its target the vault clicks open. The honest twist: your CSS is applied to actual DOM elements and measured live with `getBoundingClientRect`, so the browser's own layout engine decides whether you cracked the lock. CSS isn't simulated here — it is the render engine and the judge.\n\n### Features\n\n- Real Flexbox layout as the game engine: properties are applied to live containers and gold bars animate to wherever the browser actually lays them out; a `getBoundingClientRect` overlap check seats each bar. Nothing is hand-authored.\n- Finesse scoring (golf for CSS): validity is only the entry fee — your score is how few properties you used, rewarding shorthands like `place-content: center` over separate `justify-content` and `align-items`.\n- Procedural vaults with verified solutions: every layout is generated from a known-achievable property set, so par is real, difficulty scales, and no two heists repeat.\n- Five escalating floors: main-axis (`justify-content`), cross-axis (`align-items`), `flex-direction` flips that make the same properties behave differently, `gap`/`flex-grow`/`align-self`, and a timed vault-crack boss where finesse buys time.\n- Teaches the single most confusing thing about Flexbox — which axis a property acts on — by flipping `flex-direction` mid-game and letting you watch your assumptions break and correct.\n- Pure visual payoff: gold bars sliding into laser-gridded vaults, Canvas particle bursts on a vault opening, synthetic Web Audio SFX, and a heist-scorecard summary, built in pure vanilla JavaScript with full `prefers-reduced-motion` support and zero external frameworks.",
+            "category": "css-fundamentals",
+            "tags": [
+                "css",
+                "flexbox",
+                "game",
+                "heist",
+                "interactive",
+                "layout"
+            ],
+            "techStack": [
+                "Canvas",
+                "CSS3",
+                "HTML5",
+                "Vanilla JS",
+                "Web Audio API"
+            ],
+            "difficulty": "Hard",
+            "status": "live"
+        },
+        {
+            "id": "memory-heap-detective",
+            "name": "Memory Heap Detective",
+            "shortDescription": "Interactive memory profiling and garbage collection diagnostic simulator for learning JavaScript memory management and leak prevention.",
+            "longDescription": "## Memory Heap Detective\n\nAn interactive memory profiling and garbage collection diagnostic simulator that teaches memory management, heap snapshot analysis, and memory leak prevention in JavaScript.\n\n### Features\n\n- Interactive Heap Snapshot Visualizer: Real-time visual memory graph displaying GC Roots, Detached DOM Trees, Retainer Chains, and Allocation Timelines\n- Memory Leak Diagnostic Challenges: Level-based scenarios covering dangling event listeners, detached DOM nodes, uncleared timers, and circular reference traps\n- Real-Time Garbage Collector Simulator: Manual 'Trigger GC' sweep button that reclaims freed memory and updates heap allocation charts\n- Web Audio Synthesizer SFX: Audio feedback for GC sweeps, memory alarms, and level completion fanfares\n- Built-In Memory Profiling Manual: Cheatsheet covering V8 Garbage Collection mechanics (Mark-and-Sweep, Generational GC)",
+            "category": "js-fundamentals",
+            "tags": [
+                "game",
+                "garbage-collection",
+                "heap-snapshot",
+                "javascript",
+                "memory-leak",
+                "performance",
+                "profiling",
+                "quest",
+                "v8"
+            ],
+            "techStack": [
+                "CSS3",
+                "HTML5",
+                "Vanilla JS",
+                "Web Audio API"
+            ],
+            "difficulty": "Hard",
+            "status": "live"
+        },
+        {
+            "id": "regex-css-golf",
+            "name": "Regex CSS Golf",
+            "shortDescription": "Master CSS selectors through interactive golf-style challenges by writing the shortest valid selector to match target elements.",
+            "longDescription": "## Regex CSS Golf\n\nSharpen your CSS selector skills with golf-style puzzles. Write the shortest valid CSS selector that matches only the highlighted target elements while avoiding all others. Progress through increasingly challenging levels covering combinators, pseudo-classes, attribute selectors, and structural selectors.\n\n### Features\n\n- Progressive CSS selector challenges\n- Real-time validation and feedback\n- Golf scoring based on selector length\n- Learn combinators, attribute selectors, and pseudo-classes\n- Local progress saving using localStorage\n- Fully offline, single-file quest",
+            "category": "css-fundamentals",
+            "tags": [
+                "css",
+                "css-selectors",
+                "golf",
+                "interactive",
+                "quest",
+                "selectors"
+            ],
+            "techStack": [
+                "CSS3",
+                "HTML5",
+                "LocalStorage API",
+                "Vanilla JS"
+            ],
+            "difficulty": "Medium",
+            "status": "live"
+        },
+        {
+            "id": "the-lost-commits",
+            "name": "Strata: The Lost Commits",
+            "shortDescription": "A field excavation of version history; an interactive Git rebase simulator that turns commit history cleanup into an archaeological dig.",
+            "longDescription": "## Strata: The Lost Commits\n\nFour sites, each hiding a scattered commit history beneath the soil. You are an archivist tasked with cleaning up messy git history before it merges into the main branch. Every digging tool corresponds to a real `git rebase -i` command.\n\n### Features\n\n- Four distinct excavation sites, each with unique historical stratigraphy (commit history)\n- Authentic Git mechanics mapped to archaeological tools: Pick (keep), Reword (rename), Squash (bond), Fixup (patch), and Drop (shatter)\n- Preservation meter that challenges you to perform the most accurate rebase possible\n- Interactive Finds Table to reorder and finalize your commit history\n- In-game Archivist's Guide explaining the Git theory behind each dig\n- Analog-archaeological aesthetic with hand-drawn SVG elements and custom fonts\n- Progress saved locally via localStorage\n- Fully self-contained single HTML file with no external dependencies",
+            "category": "git",
+            "tags": [
+                "archaeology",
+                "git",
+                "interactive",
+                "quest",
+                "rebase",
+                "simulation",
+                "version-control"
+            ],
+            "techStack": [
+                "CSS3",
+                "HTML5",
+                "LocalStorage API",
+                "SVG",
+                "Vanilla JS"
+            ],
+            "difficulty": "Medium",
+            "status": "live"
+        },
+        {
+            "id": "merge-conflict-from-hell",
+            "name": "The Merge Conflict from Hell",
+            "shortDescription": "A horror-themed terminal escape room that teaches real Git commands — staging, detached HEAD, conflict resolution, and force pushing — under a draining sanity meter.",
+            "longDescription": "## The Merge Conflict from Hell\n\nMidnight. The server room door locks itself. The spirit of a corrupted Senior Developer — The Detached HEAD — has trapped your soul in a dirty working tree. Escape by typing real Git commands into a possessed Bash terminal across four corrupted branches, before your sanity hits zero and you are hard-deleted from `main`.\n\n### Features\n\n- Fully interactive faux Bash terminal that parses and evaluates real Git commands: `git add`, `commit`, `checkout -b`, `rebase`, and `push --force`, with honest `git status` output as the core teaching mechanic.\n- Four escalating levels: selective staging in a haunted component tree, a maze where phantom commits detach HEAD and invert your controls, a three-hunk merge conflict resolver, and a 60-second rapid-fire command finale.\n- 100% synthetic Web Audio horror soundscape — looping server-room hum, jumpscare screeches, and a heartbeat whose tempo tracks your remaining sanity. No audio files.\n- Reactive dread systems: sanity meter, screen shake, CRT scanlines, canvas static bursts, random scheduled jumpscares, and whole-page micro-glitches that intensify as you fail.\n- Digital blood splatter victory sequence via canvas-confetti, plus command history recall, per-level hints, and Git-flavoured easter eggs (`git blame`, `sudo`, `git reset --hard`).\n- Graceful degradation with library fallbacks and full `prefers-reduced-motion` support that kills the theatrics but keeps the game playable.",
+            "category": "git",
+            "tags": [
+                "escape-room",
+                "game",
+                "git",
+                "horror",
+                "interactive",
+                "terminal"
+            ],
+            "techStack": [
+                "Canvas",
+                "CSS3",
+                "Framer Motion",
+                "HTML5",
+                "React",
+                "Tailwind CSS",
+                "Web Audio API"
+            ],
+            "difficulty": "Medium",
+            "status": "live"
+        },
+        {
+            "id": "the-reconciler",
+            "name": "The Reconciler",
+            "shortDescription": "A Victorian manor horror where the house is a live React component tree — fix one-way props, state re-renders, effect cleanup, and reconciliation keys floor by floor while a living fiber-tree diagram reflects it all in real time.",
+            "longDescription": "## The Reconciler\n\n2 AM. A haunted house app's deploy goes wrong, and you get pulled inside it. The foyer is `<App>`; every door leads to a child. Something called The Reconciler lives in the walls — the process deciding what changes and what stays when the tree re-renders — and it has been running wrong for years. Duplicated furniture, doors that forget their state, rooms rebuilding into oblivion. Escape by fixing the house's React, floor by floor.\n\n### Features\n\n- Living fiber-tree diagram rendered alongside the manor cross-section, reflecting the actual component tree the player is standing inside — nodes pulse on render, split on new children, rewire on reorder.\n- Four floors teaching distinct React concepts: one-way prop flow (carrying a lantern down through nested rooms without setting it down), state updates triggering re-renders (an unguarded render loop that rebuilds a room faster and faster), `useEffect` dependencies and cleanup (a stale-closure ghost and a torn-down room whose effect never cleaned up), and keys in reconciliation (a shuffling portrait hallway that swaps identities without stable keys).\n- Canvas-based diff-spark particle system marking the moment the Reconciler decides to patch versus replace a node.\n- Framer Motion room-to-room morphs so floors dissolve into each other rather than cutting between screens.\n- Layered parallax SVG art for the manor interior — candlelight, dust motes, warping wallpaper that glitches when the Reconciler misbehaves.\n- Distinct horror palette: aged brass and candlelight amber against near-black oak, with a single sickly violet reserved for The Reconciler itself, plus full `prefers-reduced-motion` support.",
+            "category": "react-fundamentals",
+            "tags": [
+                "hooks",
+                "horror",
+                "props",
+                "react",
+                "reconciliation",
+                "state"
+            ],
+            "techStack": [
+                "CSS3",
+                "HTML5",
+                "Vanilla JS"
+            ],
+            "difficulty": "Hard",
+            "status": "live"
+        },
+        {
+            "id": "xss-defender",
+            "name": "XSS Defender",
+            "shortDescription": "Interactive web security quest game teaching Cross-Site Scripting (XSS) prevention, HTML sanitization, and Content Security Policy (CSP) headers.",
+            "longDescription": "## XSS Defender\n\nAn interactive web security quest game that teaches Cross-Site Scripting (XSS) prevention, HTML sanitizer policies (DOMPurify / HTML Sanitizer API), and Content Security Policy (CSP) directive configurations.\n\n### Features\n\n- Interactive XSS Attack Simulator: Live rendering of attack payloads in an isolated preview sandbox\n- Progressive Security Levels: Level-based scenarios covering Reflected XSS entity encoding, DOM sanitization policies, CSP headers, and event handler attribute injections\n- Real-Time Vulnerability Analyzer: Live feedback indicating whether script execution was blocked or succeeded\n- Web Audio Synthesizer SFX: Audio feedback for firewall alerts, sanitization shield activations, and level completion fanfares\n- Built-In Web Security Manual: Cheatsheet covering XSS prevention guidelines and CSP directive syntax",
+            "category": "js-fundamentals",
+            "tags": [
+                "csp",
+                "dompurify",
+                "game",
+                "quest",
+                "sanitizer",
+                "security",
+                "web-security",
+                "xss"
+            ],
+            "techStack": [
+                "CSS3",
+                "HTML5",
+                "Vanilla JS",
+                "Web Audio API"
+            ],
+            "difficulty": "Medium",
+            "status": "live"
+        }
+    ]
+}

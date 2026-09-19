@@ -1,0 +1,334 @@
+{
+    "site": {
+        "title": "OpenPlayGround",
+        "tagline": "Developer tools, one file each.",
+        "description": "A collection of useful developer tools, each built as a single, self-contained HTML file. No build step. No dependencies. No frameworks.",
+        "url": "<your-vercel>",
+        "github": "https://github.com/Aditya8369/OpenPlayGround",
+        "author": {
+            "name": "Aditya Mahajan",
+            "url": "https://praveen.science",
+            "github": "Aditya8369"
+        },
+    },
+    "categories": [
+        {
+            "id": "accessibility",
+            "name": "Accessibility",
+            "icon": "♿",
+            "description": "Contrast checkers, heading structure, ARIA references"
+        },
+        {
+            "id": "browser-network",
+            "name": "Browser & Network",
+            "icon": "🌐",
+            "description": "User agents, viewport info, cookies, and headers"
+        },
+        {
+            "id": "color",
+            "name": "Color Tools",
+            "icon": "🌈",
+            "description": "Pickers, contrast checkers, palettes, and converters"
+        },
+        {
+            "id": "css",
+            "name": "CSS Tools",
+            "icon": "🎨",
+            "description": "Shadows, grids, flexbox, gradients, and generators"
+        },
+        {
+            "id": "utilities",
+            "name": "Developer Utilities",
+            "icon": "🛠️",
+            "description": "UUIDs, hashes, regex, cron, passwords, and QR codes"
+        },
+        {
+            "id": "image",
+            "name": "Image Tools",
+            "icon": "🖼️",
+            "description": "Dimensions, converters, SVG, favicons, and metadata"
+        },
+        {
+            "id": "json-api",
+            "name": "JSON & API",
+            "icon": "🔗",
+            "description": "Formatters, JWT decoders, URL encoders, and curl builders"
+        },
+        {
+            "id": "text",
+            "name": "Text & Content",
+            "icon": "📝",
+            "description": "Counters, converters, diffs, and Markdown preview"
+        },
+        {
+            "id": "web-seo",
+            "name": "Web & SEO",
+            "icon": "🌐",
+            "description": "Meta tags, OG previews, sitemaps, and SEO utilities"
+        }
+    ],
+    "tools": [
+        {
+            "id": "a11y-contrast-grid",
+            "name": "A11y Contrast Grid Generator",
+            "shortDescription": "Generate a comprehensive accessibility matrix comparing all background and foreground color combinations against WCAG 2.1 contrast guidelines.",
+            "longDescription": "## A11y Contrast Grid Generator\n\nAn interactive utility to evaluate a color palette's accessibility by generating a comprehensive grid comparing all background/foreground color combinations against WCAG 2.1 contrast guidelines.\n\n### Features\n\n- **Interactive Palette Manager**: Add, edit, or delete custom colors (HEX, RGB, HSL) with real-time swatch previews.\n- **Accessibility Compliance Matrix**: Generates a matrix comparing every color as background against every color as foreground, displaying contrast ratios and WCAG status (AA, AAA, or Fail) for normal and large text.\n- **Intelligent Filtering**: Filter the grid to show only compliant combinations, only AA-compliant, or only AAA-compliant pairs.\n- **Design Tokens Export**: Export color combinations as Tailwind configurations, CSS custom properties, SCSS variables, or JSON.\n- **Export Capabilities**: Export the final contrast grid as an SVG, CSV, or formatted HTML snippet.",
+            "category": "accessibility",
+            "tags": [
+                "a11y",
+                "accessibility",
+                "color",
+                "contrast",
+                "css",
+                "design-system",
+                "developer-tools",
+                "ui",
+                "wcag"
+            ],
+            "techStack": [
+                "CSS3",
+                "HTML5",
+                "Vanilla JS"
+            ],
+            "difficulty": "Medium",
+            "status": "live"
+        },
+        {
+            "id": "advanced-robots-txt-generator",
+            "name": "Advanced Robots.txt Generator",
+            "shortDescription": "Visually create and customize robots.txt files with support for multiple user-agents, crawl rules, sitemaps, and instant code generation.",
+            "longDescription": "## Advanced Robots.txt Generator\n\nGenerate a valid robots.txt file through an intuitive visual interface. Configure multiple user-agent groups, Allow/Disallow directives, Crawl-delay values, optional Host directives, and XML Sitemaps while seeing the generated robots.txt update instantly.\n\n### Features\n\n- Visual editor for robots.txt generation\n- Support for multiple User-agent groups\n- Add Allow and Disallow rules with one click\n- Optional Crawl-delay directive for each user-agent\n- Optional Host directive support\n- Add multiple XML Sitemap URLs\n- Built-in presets including Allow All, Disallow All, Standard SEO, and WordPress Base\n- Live syntax-highlighted robots.txt preview\n- Copy generated robots.txt to the clipboard\n- Download the generated file as robots.txt\n- Fully responsive interface with modern dark theme\n- Built with HTML, CSS, and Vanilla JavaScript with no backend required",
+            "category": "web-seo",
+            "tags": [
+                "crawler",
+                "generator",
+                "robots",
+                "robots-txt",
+                "search-engine",
+                "seo",
+                "sitemap",
+                "user-agent",
+                "webmaster",
+                "website"
+            ],
+            "techStack": [
+                "CSS3",
+                "Google Fonts",
+                "HTML5",
+                "Vanilla JS"
+            ],
+            "difficulty": "Easy",
+            "status": "live"
+        },
+        {
+            "id": "animation-cubic-bezier-editor",
+            "name": "Animation Cubic-Bezier Editor",
+            "shortDescription": "Visually create and customize CSS cubic-bezier() easing functions with a live animation preview.",
+            "longDescription": "## Animation Cubic-Bezier Editor\n\nA professional visual editor for crafting custom CSS easing functions.\n\n### Features\n\n- **Interactive Canvas:** Draggable control points to visually sculpt your bezier curve.\n- **Live Preview:** Real-time animation box to instantly test how your easing feels.\n- **Smart Presets:** One-click load standard easings (`ease`, `ease-in`, `ease-out`, `ease-in-out`, `linear`).\n- **Instant Export:** Auto-generates standard-compliant `cubic-bezier()` CSS syntax with a 1-click copy feature.\n- **Offline First:** Operates entirely client-side using Vanilla JS and native SVG manipulation.",
+            "category": "css",
+            "tags": [
+                "animation",
+                "bezier",
+                "css",
+                "easing",
+                "frontend",
+                "generator",
+                "transition"
+            ],
+            "techStack": [
+                "CSS3",
+                "HTML5",
+                "SVG",
+                "Vanilla JS"
+            ],
+            "difficulty": "Easy",
+            "status": "live"
+        },
+        {
+            "id": "bash-commands-sandbox",
+            "name": "Bash Sandbox",
+            "shortDescription": "A simulated bash terminal to play with and learn common commands, entirely in your browser.",
+            "longDescription": "## Bash Sandbox\n\nA simulated bash terminal environment that runs entirely in your browser. It's a safe and fun way to learn and experiment with common shell commands like `ls`, `cd`, `cat`, `mkdir`, and `echo` without any risk to your system. The sandbox operates on a virtual file system that resets on every page load.\n\n### Features\n\n- A realistic terminal-like interface.\n- Support for core commands: `ls`, `cd`, `cat`, `mkdir`, `touch`, `pwd`, `echo`, `clear`, and `help`.\n- A virtual file system to navigate and manipulate.\n- Command history using up/down arrow keys.\n- Tab autocompletion for paths.\n- Works entirely offline.",
+            "category": "utilities",
+            "tags": [
+                "bash",
+                "cli",
+                "command-line",
+                "learning",
+                "offline",
+                "sandbox",
+                "shell",
+                "terminal"
+            ],
+            "techStack": [
+                "CSS3",
+                "HTML5",
+                "Vanilla JS"
+            ],
+            "difficulty": "Medium",
+            "status": "live"
+        },
+        {
+            "id": "git-commit-range-cleaner",
+            "name": "Commit Message & Range Cleaner",
+            "shortDescription": "Paste a git log excerpt and generate interactive-rebase plans + normalized Conventional Commits suggestions.",
+            "longDescription": "## Commit Message & Range Cleaner\n\nParse git log outputs and visually design interactive rebases. Automatically audit and normalize commit messages into compliant Conventional Commits standards.\n\n### Features\n\n- Parse standard multiline git log outputs or compact git log --oneline listings\n- Order commits sequentially from oldest to newest to match Git rebase workflow expectations\n- Automatically translate messy commit subjects into Conventional Commits patterns\n- Flag unquoted keywords, casing, periods, and length violations with inline visual warnings\n- Customize rebase actions (pick, reword, squash, fixup, drop, edit) on an interactive planner dashboard\n- Copy generated git-rebase-todo contents directly to terminal rebase sessions\n- Export summaries of reworded changelogs and download configurations as JSON files",
+            "category": "utilities",
+            "tags": [
+                "developer-tools",
+                "git",
+                "offline",
+                "planner",
+                "rebase",
+                "utility"
+            ],
+            "techStack": [
+                "CSS3",
+                "Google Fonts",
+                "HTML5",
+                "Vanilla JS"
+            ],
+            "difficulty": "Medium",
+            "status": "live"
+        },
+        {
+            "id": "css-easing-visualizer",
+            "name": "CSS Easing Visualizer",
+            "shortDescription": "Compare multiple CSS easing curves side-by-side on a shared graph and in an animated race preview.",
+            "longDescription": "## CSS Easing Visualizer\n\nCompare multiple CSS easing curves side-by-side — see their shape on a shared graph and watch them race in an animated preview, so you can pick the right motion feel by comparison rather than editing one curve in isolation.\n\n### Features\n\n- Add and remove multiple curves (named presets or custom cubic-bezier values)\n- Shared, color-coded SVG graph plotting each curve's progress over time\n- Animated race track with one ball per curve, driven by the Web Animations API\n- Adjustable shared duration for a fair comparison\n- Legend showing each curve's resolved CSS easing value\n- Runs completely offline",
+            "category": "css",
+            "tags": [
+                "animation",
+                "comparison",
+                "css",
+                "cubic-bezier",
+                "easing",
+                "frontend"
+            ],
+            "techStack": [
+                "CSS3",
+                "Google Fonts",
+                "HTML5",
+                "SVG",
+                "Vanilla JS",
+                "Web Animations API"
+            ],
+            "difficulty": "Medium",
+            "status": "live"
+        },
+        {
+            "id": "css-unit-converter",
+            "name": "CSS Unit Converter",
+            "shortDescription": "Instantly convert between px, rem, em, vw, vh, and percentages.",
+            "longDescription": "## CSS Unit Converter\n\nA professional utility for frontend developers to instantly convert between absolute and relative CSS units.\n\n### Features\n\n- **Comprehensive Conversions:** Supports `px`, `rem`, `em`, `vw`, `vh`, `%`, and `pt`.\n- **Dynamic Base Context:** Set custom base font sizes and viewport dimensions for highly accurate relative calculations.\n- **Real-Time Engine:** Values update instantly across all unit fields as you type.\n- **One-Click Copy:** Copy individual values instantly to your clipboard.\n- **Offline First:** Zero dependencies, running entirely within the browser memory.",
+            "category": "css",
+            "tags": [
+                "converter",
+                "css",
+                "design",
+                "frontend",
+                "units",
+                "web"
+            ],
+            "techStack": [
+                "CSS3",
+                "HTML5",
+                "Vanilla JS"
+            ],
+            "difficulty": "Medium",
+            "status": "live"
+        },
+        {
+            "id": "curl-builder",
+            "name": "Curl Builder",
+            "shortDescription": "Construct ready-to-run cURL commands for REST APIs with headers, auth, body types, query params, and file uploads.",
+            "longDescription": "## Curl Builder\n\nBuild and copy shell-ready cURL commands with support for query parameters, headers, auth modes, JSON/form/raw bodies, and multipart file upload.\n\n### Features\n\n- Select HTTP method and request URL\n- Add query parameters and custom headers\n- Basic auth and bearer token support\n- JSON / form / raw body payload support\n- Multipart file upload field support\n- Copy command to clipboard instantly\n- Offline-first single HTML file with no dependencies",
+            "category": "json-api",
+            "tags": [
+                "api",
+                "command",
+                "curl",
+                "developer-tools",
+                "http",
+                "request",
+                "rest",
+                "terminal"
+            ],
+            "techStack": [
+                "CSS3",
+                "HTML5",
+                "Vanilla JS"
+            ],
+            "difficulty": "Medium",
+            "status": "live"
+        },
+        {
+            "id": "favicon-generator",
+            "name": "Favicon Generator",
+            "shortDescription": "Generate a complete favicon pack and integration tags from any image, offline.",
+            "longDescription": "## Favicon Generator\n\nA client-side tool that turns any image into a full favicon pack — no server, no upload.\n\n### Features\n\n- Generates 7 sizes (16, 32, 48, 64, 180, 192, 512px)\n- Center-crop auto-resize via Canvas\n- Live preview grid with individual downloads\n- Ready-to-paste HTML `<link>` tags\n- One-click ZIP export of the full pack\n- Works completely offline",
+            "category": "utilities",
+            "tags": [
+                "developer-tools",
+                "favicon",
+                "generator",
+                "image",
+                "offline"
+            ],
+            "techStack": [
+                "Canvas API",
+                "CSS3",
+                "HTML5",
+                "Vanilla JS"
+            ],
+            "difficulty": "Easy",
+            "status": "live"
+        },
+        {
+            "id": "github-profile-readme-generator",
+            "name": "GitHub Profile README Generator",
+            "shortDescription": "Generate a professional GitHub profile README with live stats and an editable preview.",
+            "longDescription": "## GitHub Profile README Generator\n\nThis tool helps developers create a professional and visually appealing README for their GitHub profile. It provides a simple form to input personal details and automatically generates the corresponding Markdown, complete with social links, skill badges, and live-fetched GitHub statistics.\n\n### Features\n\n- Live Markdown editor with a rendered preview tab.\n- Fetches and displays GitHub stats (total stars, forks, contributions) automatically.\n- Generates sections for a bio, tech stack (with badges), and social media links (with icons).\n- Allows for direct editing of the generated Markdown.\n- Provides \"Copy Markdown\" and \"Download README.md\" functionality.\n- Runs entirely in the browser, ensuring user privacy.",
+            "category": "utilities",
+            "tags": [
+                "api",
+                "developer-tools",
+                "generator",
+                "github",
+                "markdown",
+                "profile",
+                "readme"
+            ],
+            "techStack": [
+                "CSS3",
+                "Fetch API",
+                "HTML5",
+                "Vanilla JS"
+            ],
+            "difficulty": "Medium",
+            "status": "live"
+        },
+        {
+            "id": "sitemap-generator",
+            "name": "Sitemap Generator",
+            "shortDescription": "A standalone Sitemap Generator that helps users create valid XML sitemaps for websites entirely offline.",
+            "longDescription": "## Sitemap Generator\n\nA standalone Sitemap Generator that helps users create valid XML sitemaps for websites.\n\n### Features\n\n- Add multiple website URLs individually.\n- **New:** Bulk Import a list of URLs instantly via copy-paste.\n- Set last modified (lastmod) date.\n- Configure change frequency (changefreq) and priority values.\n- Generate valid XML sitemap with real-time XML preview.\n- One-click copy generated XML or download as sitemap.xml.\n- Works completely offline with no dependencies.",
+            "category": "web-seo",
+            "tags": [
+                "generator",
+                "offline",
+                "seo",
+                "sitemap",
+                "web",
+                "xml"
+            ],
+            "techStack": [
+                "CSS3",
+                "HTML5",
+                "Vanilla JS"
+            ],
+            "difficulty": "Medium",
+            "status": "live"
+        }
+    ]
+}
