@@ -769,6 +769,7 @@ let html = template
   .replace("{{INSTRUMENTS_JSON}}", instrumentsJson)
   .replace("{{INSTRUMENT_CATEGORIES_JSON}}", instrumentCategoriesJson);
 
+
 // ──────────────────────────────────────────────
 // Write output
 // ──────────────────────────────────────────────
