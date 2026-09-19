@@ -736,7 +736,6 @@ let html = template
   .replace(/\{\{GITHUB_URL\}\}/g, escapeAttr(site.github))
   .replace(/\{\{AUTHOR_URL\}\}/g, escapeAttr(site.author.url))
   .replace(/\{\{AUTHOR_NAME\}\}/g, escapeHtml(site.author.name))
-  .replace(/\{\{SSOC_URL\}\}/g, escapeAttr(site.ssoc.url))
   .replace(/\{\{YEAR\}\}/g, new Date().getFullYear().toString())
   .replace(/\{\{TOOL_COUNT\}\}/g, String(totalCount))
   .replace(/\{\{QUEST_COUNT\}\}/g, String(totalQuestCount))
