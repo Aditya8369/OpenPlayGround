@@ -151,7 +151,7 @@ npm run themes
 # Validate all assets, JSON schemas, and files
 npm run validate
 ```
-
+Note- For public deployment, click [https://reliable-lokum-c2dc61.netlify.app/](url)
 ---
 
 ## 📂 Project Structure
