@@ -16,13 +16,13 @@
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="One File Tools — One tool. One file. Open and use." />
+    <meta property="og:title" content="OpenPlayGround — One tool. One file. Open and use." />
     <meta property="og:description" content="A growing collection of developer tools, resume themes, and portfolio templates — each a single, self-contained HTML file. No build step. No dependencies. No frameworks." />
     <meta property="og:url" content="&lt;your-vercel&gt;" />
     <meta property="og:image" content="https://one-file-tools.pages.dev/assets/thumb.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:site_name" content="One File Tools" />
+    <meta property="og:site_name" content="OpenPlayGround" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -787,31 +787,6 @@
         height: 13px;
       }
 
-      /* Contributing CTA */
-      .contribute-cta {
-        margin-top: 32px;
-        padding: 22px 24px;
-        border: 1px dashed var(--border-strong);
-        border-radius: var(--radius);
-        background: var(--surface);
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-      }
-      .contribute-cta p {
-        margin: 0;
-        font-size: 14px;
-        color: var(--text-muted);
-      }
-      .contribute-cta strong {
-        color: var(--text);
-      }
-      .contribute-cta .link-btn {
-        font-size: 13px;
-        padding: 8px 16px;
-      }
 
       /* Theme showcase cards (resume / portfolio) */
       .showcase {
@@ -1166,20 +1141,7 @@
         width: 15px;
         height: 15px;
       }
-      .ssoc {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 12.5px;
-        color: var(--text-muted);
-        padding: 8px 12px;
-        border-radius: 999px;
-        border: 1px solid var(--border);
-        background: var(--surface);
-      }
-      .ssoc .spark {
-        color: var(--amber);
-      }
+
       .footer-bottom {
         margin-top: 32px;
         padding-top: 20px;
@@ -1214,14 +1176,14 @@
     <!-- ===================== TOP BAR ===================== -->
     <header class="topbar">
       <div class="wrap topbar-inner">
-        <a class="brand" href="#tools" aria-label="One File Tools — home">
+        <a class="brand" href="#tools" aria-label="OpenPlayGround — home">
           <span class="glyph" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
               <path d="M14 2v6h6" />
             </svg>
           </span>
-          One File Tools
+          OpenPlayGround
         </a>
         <div class="topbar-actions">
           <button class="icon-btn theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark and light theme">
@@ -1247,14 +1209,14 @@
 
         <!-- Pillar chooser -->
         <nav class="pillars" id="pillars" aria-label="Choose a collection">
-          <button class="pillar" type="button" data-pillar="tools" aria-pressed="true"><span class="p-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.1-.4-.4-2.1z"/></svg></span><h3>One File Tools</h3><p>CSS generators, JSON utilities, SEO helpers, Developer tools, and more.</p><span class="p-count">11 tools and counting</span></button>
+          <button class="pillar" type="button" data-pillar="tools" aria-pressed="true"><span class="p-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.1-.4-.4-2.1z"/></svg></span><h3>OpenPlayGround</h3><p>CSS generators, JSON utilities, SEO helpers, Developer tools, and more.</p><span class="p-count">11 tools and counting</span></button>
           <button class="pillar" type="button" data-pillar="resume" aria-pressed="false"><span class="p-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg></span><h3>One File Resume</h3><p>ATS-friendly resume themes from a single JSON file. Zero JS, A4 print-ready.</p><span class="p-count">6 themes</span></button>
           <button class="pillar" type="button" data-pillar="portfolio" aria-pressed="false"><span class="p-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg></span><h3>One File Portfolio</h3><p>Developer portfolio themes from a single JSON file. Dark/light, compelling, responsive.</p><span class="p-count">6 themes</span></button>
           <button class="pillar" type="button" data-pillar="quests" aria-pressed="false"><span class="p-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg></span><h3>One File Quests</h3><p>Interactive, gamified lessons to learn General dev skills, Git, CSS, JS, and CLI workflows by doing.</p><span class="p-count">12 quests</span></button>
           <button class="pillar" type="button" data-pillar="quizzes" aria-pressed="false"><span class="p-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><h3>One File Quizzes</h3><p>Quick multiple-choice challenges to test your Git, CSS, JS, and general knowledge.</p><span class="p-count">9 quizzes</span></button>
           <button class="pillar" type="button" data-pillar="design-system" aria-pressed="false"><span class="p-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span><h3>One File Design System</h3><p>Premium UI showcases — dashboards, landing pages, and components built with CSS frameworks and JS libraries via CDN.</p><span class="p-count">0 designs</span></button>
           <button class="pillar" type="button" data-pillar="instruments" aria-pressed="false"><span class="p-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span><h3>One File Instruments</h3><p>Real, playable musical tools — synthesizers, drum machines, chord libraries, and ear trainers, in a single HTML file.</p><span class="p-count">5 instruments</span></button>
-          <div class="pillar is-muted" aria-disabled="true"><span class="p-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg></span><h3>More coming soon…</h3><p>New pillars and ideas are always welcome. Contribute on GitHub!</p><span class="p-count">Contribute on GitHub</span></div>
+          <div class="pillar is-muted" aria-disabled="true"><span class="p-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg></span><h3>More coming soon…</h3><p>New pillars and ideas are in development.</p><span class="p-count">Stay tuned</span></div>
         </nav>
       </section>
 
@@ -1263,7 +1225,7 @@
         <section class="section is-active" id="section-tools" aria-labelledby="tools-heading">
           <div class="section-head">
             <div class="kicker">~/tools</div>
-            <h2 id="tools-heading">One File Tools</h2>
+            <h2 id="tools-heading">OpenPlayGround</h2>
             <p>Generators, validators, and utilities — every one a single HTML file you can open straight from disk. Search by name, description, or tag.</p>
           </div>
 
@@ -1301,11 +1263,7 @@
             <article class="card" data-id="sitemap-generator" data-category="web-seo" data-search="sitemap generator a standalone sitemap generator that helps users create valid xml sitemaps for websites entirely offline. generator offline seo sitemap web xml" tabindex="0" role="button" aria-label="View details for Sitemap Generator"><img class="card-thumb" src="tools/sitemap-generator.png" alt="Sitemap Generator" loading="lazy" /><div class="card-body"><div class="card-top"><h4>Sitemap Generator</h4><span class="badge-cat"><span aria-hidden="true">🌐</span> Web &amp; SEO</span></div><p class="desc">A standalone Sitemap Generator that helps users create valid XML sitemaps for websites entirely offline.</p><div class="path mono">tools/sitemap-generator.html</div><div class="card-foot"><span class="badge-diff medium">Medium</span><span class="card-links"><a class="link-btn primary" href="&lt;your-vercel&gt;/tools/sitemap-generator" target="_blank" rel="noopener noreferrer" data-nomodal>Live <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a></span></div></div></article>
           </div>
 
-          <div class="contribute-cta">
-            <p><strong>Want to see your tool here?</strong> Check the contributing guide and submit a PR.</p>
-            <a class="link-btn primary" href="new.html">Start Here — Contribution Wizard <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-            <a class="link-btn primary" href="https://github.com/Aditya8369/OpenPlayGround/blob/main/Contributing.md" target="_blank" rel="noopener noreferrer">Contributing Guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-          </div>
+
         </section>
 
         <!-- ===================== RESUME SECTION ===================== -->
@@ -1398,11 +1356,7 @@
             <article class="card" data-id="xss-defender" data-category="js-fundamentals" data-search="xss defender interactive web security quest game teaching cross-site scripting (xss) prevention, html sanitization, and content security policy (csp) headers. csp dompurify game quest sanitizer security web-security xss" tabindex="0" role="button" aria-label="View details for XSS Defender"><img class="card-thumb" src="quests/xss-defender.png" alt="XSS Defender" loading="lazy" /><div class="card-body"><div class="card-top"><h4>XSS Defender</h4><span class="badge-cat"><span aria-hidden="true">⚙️</span> JavaScript Fundamentals</span></div><p class="desc">Interactive web security quest game teaching Cross-Site Scripting (XSS) prevention, HTML sanitization, and Content Security Policy (CSP) headers.</p><div class="path mono">quests/xss-defender.html</div><div class="card-foot"><span class="badge-diff medium">Medium</span><span class="card-links"><a class="link-btn primary" href="&lt;your-vercel&gt;/quests/xss-defender" target="_blank" rel="noopener noreferrer" data-nomodal>Start Quest <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a></span></div></div></article>
           </div>
 
-          <div class="contribute-cta">
-            <p><strong>Want to add a quest?</strong> Check the quests contributing guide and submit a PR.</p>
-            <a class="link-btn primary" href="new.html">Start Here — Contribution Wizard <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-            <a class="link-btn primary" href="https://github.com/Aditya8369/OpenPlayGround/blob/main/quests/Contributing.md" target="_blank" rel="noopener noreferrer">Contributing Guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-          </div>
+
         </section>
 
         <!-- ===================== DESIGN SYSTEM SECTION ===================== -->
@@ -1431,11 +1385,7 @@
 
           </div>
 
-          <div class="contribute-cta">
-            <p><strong>Want to showcase your design?</strong> Build a single-file UI using any CSS framework or JS library via CDN and submit a PR.</p>
-            <a class="link-btn primary" href="new.html">Start Here — Contribution Wizard <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-            <a class="link-btn primary" href="https://github.com/Aditya8369/OpenPlayGround/blob/main/Contributing.md" target="_blank" rel="noopener noreferrer">Contributing Guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-          </div>
+
         </section>
         <!-- ===================== INSTRUMENTS SECTION ===================== -->
         <section class="section" id="section-instruments" aria-labelledby="instruments-heading">
@@ -1471,11 +1421,7 @@
             <article class="card" data-id="neon-launchpad-matrix" data-category="melody" data-search="neon launchpad matrix an 8x8 neon neumorphic performance grid synthesizer mapped to a pentatonic scale with real-time audio and dynamic ripple animations. audio launchpad melody music synthesizer web-audio-api" tabindex="0" role="button" aria-label="View details for Neon Launchpad Matrix"><img class="card-thumb" src="instruments/neon-launchpad-matrix.png" alt="Neon Launchpad Matrix" loading="lazy" /><div class="card-body"><div class="card-top"><h4>Neon Launchpad Matrix</h4><span class="badge-cat"><span aria-hidden="true">🎹</span> Melody &amp; Synthesis</span></div><p class="desc">An 8x8 neon neumorphic performance grid synthesizer mapped to a Pentatonic scale with real-time audio and dynamic ripple animations.</p><div class="path mono">instruments/neon-launchpad-matrix.html</div><div class="card-foot"><span class="badge-diff medium">Medium</span><span class="card-links"><a class="link-btn primary" href="&lt;your-vercel&gt;/instruments/neon-launchpad-matrix" target="_blank" rel="noopener noreferrer" data-nomodal>Play <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a></span></div></div></article>
           </div>
 
-          <div class="contribute-cta">
-            <p><strong>Want to add an instrument?</strong> Check the instruments contributing guide and submit a PR.</p>
-            <a class="link-btn primary" href="new.html">Start Here — Contribution Wizard <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-            <a class="link-btn primary" href="https://github.com/Aditya8369/OpenPlayGround/blob/main/instruments/Contributing.md" target="_blank" rel="noopener noreferrer">Contributing Guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-          </div>
+
         </section>
 
         <!-- ===================== QUIZZES SECTION ===================== -->
@@ -1516,11 +1462,7 @@
             <article class="card" data-id="branch-quest" data-category="git" data-search="the branch that wouldn&#39;t die master git branching through 8 interactive challenges covering create, list, switch, delete, merge, fast-forward, conflicts, and rebase. branching git interactive merge quiz rebase" tabindex="0" role="button" aria-label="View details for The Branch That Wouldn&#39;t Die"><div class="card-thumb-placeholder">🔀</div><div class="card-body"><div class="card-top"><h4>The Branch That Wouldn&#39;t Die</h4><span class="badge-cat"><span aria-hidden="true">🔀</span> Git &amp; Version Control</span></div><p class="desc">Master Git branching through 8 interactive challenges covering create, list, switch, delete, merge, fast-forward, conflicts, and rebase.</p><div class="path mono">quizzes/branch-quest.html</div><div class="card-foot"><span class="badge-diff easy">Easy</span><span class="card-links"><a class="link-btn primary" href="&lt;your-vercel&gt;/quizzes/branch-quest" target="_blank" rel="noopener noreferrer" data-nomodal>Start Quiz <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a></span></div></div></article>
           </div>
 
-          <div class="contribute-cta">
-            <p><strong>Want to add a quiz?</strong> Check the quizzes contributing guide and submit a PR.</p>
-            <a class="link-btn primary" href="new.html">Start Here — Contribution Wizard <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-            <a class="link-btn primary" href="https://github.com/Aditya8369/OpenPlayGround/blob/main/quizzes/Contributing.md" target="_blank" rel="noopener noreferrer">Contributing Guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-          </div>
+
         </section>
       </div>
     </main>
@@ -1536,7 +1478,7 @@
                   <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                   <path d="M14 2v6h6" /></svg
               ></span>
-              One File Tools
+              OpenPlayGround
             </span>
             <p>Built by <a href="undefined" target="_blank" rel="noopener noreferrer">Aditya Mahajan</a>. Open source with purpose. One file at a time.</p>
           </div>
@@ -1545,14 +1487,10 @@
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.05.78 2.12v3.14c0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z" /></svg>
               GitHub repository
             </a>
-            <a href="https://github.com/Aditya8369/OpenPlayGround/blob/main/Contributing.md" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l6 6"/></svg>
-              Contributing guide
-            </a>
-            <a class="ssoc" href="{{SSOC_URL}}" target="_blank" rel="noopener noreferrer"> <span class="spark" aria-hidden="true">✦</span> Proud participant in Social Summer of Code </a>
+
           </div>
         </div>
-        <div class="footer-bottom">© 2026 One File Tools — Unlicense (Public Domain), no trackers, no build step.</div>
+        <div class="footer-bottom">© 2026 OpenPlayGround — Unlicense (Public Domain), no trackers, no build step.</div>
       </div>
     </footer>
 
