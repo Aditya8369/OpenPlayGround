@@ -81,7 +81,7 @@ function check(dir, jsonFile, key, label) {
   console.log(`  ${items.length} ${label.toLowerCase()}`);
 }
 
-console.log("Validating One File Tools...\n");
+console.log("Validating OpenPlayGround...\n");
 check("tools", "tools.json", "tools", "Tools");
 check("quests", "quests.json", "quests", "Quests");
 check("quizzes", "quizzes.json", "quizzes", "Quizzes");
