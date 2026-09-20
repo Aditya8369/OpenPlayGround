@@ -203,7 +203,7 @@ const toolsData = tools.map((tool) => ({
   file: `tools/${tool.id}.html`,
   thumbnail: `tools/${tool.id}.png`,
   github: `${site.github}/blob/main/tools/${tool.id}.html`,
-  live: `${site.url}/tools/${tool.id}`
+  live: `tools/${tool.id}.html`
 }));
 
 // Group tools by category
@@ -243,7 +243,7 @@ const questsDataBuilt = quests.map((q) => ({
   file: `quests/${q.id}.html`,
   thumbnail: `quests/${q.id}.png`,
   github: `${site.github}/blob/main/quests/${q.id}.html`,
-  live: `${site.url}/quests/${q.id}`
+  live: `quests/${q.id}.html`
 }));
 
 const totalQuestCount = questsDataBuilt.length;
@@ -277,7 +277,7 @@ const quizzesDataBuilt = quizzes.map((q) => ({
   file: `quizzes/${q.id}.html`,
   thumbnail: `quizzes/${q.id}.png`,
   github: `${site.github}/blob/main/quizzes/${q.id}.html`,
-  live: `${site.url}/quizzes/${q.id}`
+  live: `quizzes/${q.id}.html`
 }));
 
 const totalQuizCount = quizzesDataBuilt.length;
@@ -312,7 +312,7 @@ const dsDataBuilt = designs.map((d) => ({
   file: `design-system/${d.id}.html`,
   thumbnail: `design-system/${d.id}.png`,
   github: `${site.github}/blob/main/design-system/${d.id}.html`,
-  live: `${site.url}/design-system/${d.id}`
+  live: `design-system/${d.id}.html`
 }));
 
 const totalDsCount = dsDataBuilt.length;
@@ -346,7 +346,7 @@ const instrumentsDataBuilt = instruments.map((inst) => ({
   file: `instruments/${inst.id}.html`,
   thumbnail: `instruments/${inst.id}.png`,
   github: `${site.github}/blob/main/instruments/${inst.id}.html`,
-  live: `${site.url}/instruments/${inst.id}`
+  live: `instruments/${inst.id}.html`
 }));
 
 const totalInstrumentCount = instrumentsDataBuilt.length;
@@ -377,7 +377,7 @@ function buildPillarCards() {
   const pillars = [
     {
       id: "tools",
-      title: "One File Tools",
+      title: "OpenPlayGround",
       count: totalCount + " tools and counting",
       desc: "CSS generators, JSON utilities, SEO helpers, Developer tools, and more.",
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.1-.4-.4-2.1z"/></svg>'
@@ -427,8 +427,8 @@ function buildPillarCards() {
     {
       id: "soon",
       title: "More coming soon\u2026",
-      count: "Contribute on GitHub",
-      desc: "New pillars and ideas are always welcome.",
+      count: "Stay tuned",
+      desc: "New pillars and ideas are in development.",
       muted: true,
       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg>'
     }
@@ -439,7 +439,7 @@ function buildPillarCards() {
       return '          <div class="pillar is-muted" aria-disabled="true">' +
         '<span class="p-icon" aria-hidden="true">' + p.icon + '</span>' +
         '<h3>' + escapeHtml(p.title) + '</h3>' +
-        '<p>' + escapeHtml(p.desc) + ' Contribute on GitHub!</p>' +
+        '<p>' + escapeHtml(p.desc) + '</p>' +
         '<span class="p-count">' + escapeHtml(p.count) + '</span></div>';
     }
     const pressed = p.id === "tools" ? "true" : "false";
@@ -470,7 +470,7 @@ function buildToolCards() {
     const cat = categoryMap[t.category];
     const diff = t.difficulty.toLowerCase();
     const searchData = (t.name + " " + t.shortDescription + " " + t.tags.join(" ")).toLowerCase();
-    const liveUrl = site.url + "/tools/" + t.id;
+    const liveUrl = "tools/" + t.id + ".html";
 
     const thumbHtml = t.hasThumbnail
       ? '<img class="card-thumb" src="tools/' + escapeAttr(t.id) + '.png" alt="' + escapeAttr(t.name) + '" loading="lazy" />'
@@ -494,7 +494,7 @@ function buildToolCards() {
 // ── Build quest filter pills (static HTML) ──
 
 function buildQuestFilterPills() {
-  const pills = ['              <button class="pill" type="button" data-cat="all" aria-pressed="true"><span class="pi" aria-hidden="true">\u25A6</span> All <span class="pill-count">(' + totalQuestCount + ')</span></button>'];
+  const pills = ['              <button class="pill" type="button" data-cat="all" aria-pressed="true"><span class="pi" aria-hidden="true">▦</span> All <span class="pill-count">(' + totalQuestCount + ')</span></button>'];
   questCategories.forEach((c) => {
     const count = questCountByCategory[c.id] || 0;
     if (count === 0) return;
@@ -510,7 +510,7 @@ function buildQuestCards() {
     const cat = questCategoryMap[q.category];
     const diff = q.difficulty.toLowerCase();
     const searchData = (q.name + " " + q.shortDescription + " " + q.tags.join(" ")).toLowerCase();
-    const liveUrl = site.url + "/quests/" + q.id;
+    const liveUrl = "quests/" + q.id + ".html";
 
     const thumbHtml = q.hasThumbnail
       ? '<img class="card-thumb" src="quests/' + escapeAttr(q.id) + '.png" alt="' + escapeAttr(q.name) + '" loading="lazy" />'
@@ -534,7 +534,7 @@ function buildQuestCards() {
 // ── Build quiz filter pills (static HTML) ──
 
 function buildQuizFilterPills() {
-  const pills = ['              <button class="pill" type="button" data-cat="all" aria-pressed="true"><span class="pi" aria-hidden="true">\u25A6</span> All <span class="pill-count">(' + totalQuizCount + ')</span></button>'];
+  const pills = ['              <button class="pill" type="button" data-cat="all" aria-pressed="true"><span class="pi" aria-hidden="true">▦</span> All <span class="pill-count">(' + totalQuizCount + ')</span></button>'];
   quizCategories.forEach((c) => {
     const count = quizCountByCategory[c.id] || 0;
     if (count === 0) return;
@@ -550,7 +550,7 @@ function buildQuizCards() {
     const cat = quizCategoryMap[q.category];
     const diff = q.difficulty.toLowerCase();
     const searchData = (q.name + " " + q.shortDescription + " " + q.tags.join(" ")).toLowerCase();
-    const liveUrl = site.url + "/quizzes/" + q.id;
+    const liveUrl = "quizzes/" + q.id + ".html";
 
     const thumbHtml = q.hasThumbnail
       ? '<img class="card-thumb" src="quizzes/' + escapeAttr(q.id) + '.png" alt="' + escapeAttr(q.name) + '" loading="lazy" />'
@@ -590,7 +590,7 @@ function buildDsCards() {
     const cat = dsCategoryMap[d.category];
     const diff = d.difficulty.toLowerCase();
     const searchData = (d.name + " " + d.shortDescription + " " + d.tags.join(" ") + " " + d.frameworks.join(" ")).toLowerCase();
-    const liveUrl = site.url + "/design-system/" + d.id;
+    const liveUrl = "design-system/" + d.id + ".html";
 
     const thumbHtml = d.hasThumbnail
       ? '<img class="card-thumb" src="design-system/' + escapeAttr(d.id) + '.png" alt="' + escapeAttr(d.name) + '" loading="lazy" />'
@@ -619,7 +619,7 @@ function buildDsCards() {
 // ── Build instrument filter pills (static HTML) ──
 
 function buildInstrumentFilterPills() {
-  const pills = ['              <button class="pill" type="button" data-cat="all" aria-pressed="true"><span class="pi" aria-hidden="true">\u25A6</span> All <span class="pill-count">(' + totalInstrumentCount + ')</span></button>'];
+  const pills = ['              <button class="pill" type="button" data-cat="all" aria-pressed="true"><span class="pi" aria-hidden="true">▦</span> All <span class="pill-count">(' + totalInstrumentCount + ')</span></button>'];
   instrumentCategories.forEach((c) => {
     const count = instrumentCountByCategory[c.id] || 0;
     if (count === 0) return;
@@ -635,7 +635,7 @@ function buildInstrumentCards() {
     const cat = instrumentCategoryMap[inst.category];
     const diff = inst.difficulty.toLowerCase();
     const searchData = (inst.name + " " + inst.shortDescription + " " + inst.tags.join(" ")).toLowerCase();
-    const liveUrl = site.url + "/instruments/" + inst.id;
+    const liveUrl = "instruments/" + inst.id + ".html";
 
     const thumbHtml = inst.hasThumbnail
       ? '<img class="card-thumb" src="instruments/' + escapeAttr(inst.id) + '.png" alt="' + escapeAttr(inst.name) + '" loading="lazy" />'
@@ -768,7 +768,6 @@ let html = template
   .replace("{{DS_CATEGORIES_JSON}}", dsCategoriesJson)
   .replace("{{INSTRUMENTS_JSON}}", instrumentsJson)
   .replace("{{INSTRUMENT_CATEGORIES_JSON}}", instrumentCategoriesJson);
-
 
 // ──────────────────────────────────────────────
 // Write output
