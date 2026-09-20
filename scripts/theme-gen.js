@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Theme generator for OpenPlayGround
+ * Theme generator for OpenPlayGround.
  *
  * Reads profile.json and processes all .hbs (Handlebars) template files
  * in resume/themes/ and portfolio/themes/, outputting .html files.
@@ -201,8 +201,8 @@ function buildContext(profile) {
     socialLinks: socialLinks,
 
     // Meta
-    toolsUrl: "https://github.com/praveenscience/One-File-Tools",
-    siteUrl: "https://one-file-tools.pages.dev"
+    toolsUrl: "https://github.com/Aditya8369/OpenPlayGround",
+    siteUrl: "https://aditya8369.github.io/OpenPlayGround/"
   };
 }
 
