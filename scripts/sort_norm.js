@@ -1,0 +1,137 @@
+const fs = require("fs");
+const path = require("path");
+
+const TAG_ALIASES = {
+  js: "javascript",
+  javascript: "javascript",
+  "vanilla-js": "javascript",
+  "vanilla-javascript": "javascript",
+
+  html5: "html",
+  css3: "css",
+
+  og: "open-graph",
+  "og-tags": "open-graph",
+
+  generators: "generator",
+  validators: "validator",
+  analyzers: "analyzer",
+  formatters: "formatter",
+  converters: "converter",
+  calculators: "calculator",
+
+  uuids: "uuid",
+
+  developer: "developer-tools",
+  "developer-tool": "developer-tools"
+};
+
+function normalizeTag(tag) {
+  if (tag === null || tag === undefined) return "";
+  const key = String(tag).trim().toLowerCase();
+  return TAG_ALIASES[key] || key;
+}
+
+const file = process.argv[2];
+
+if (!file) {
+  console.error("Usage: sort-norm <file.json>");
+  process.exit(1);
+}
+
+const data = JSON.parse(fs.readFileSync(path.resolve(file), "utf8"));
+
+// Sort categories
+if (Array.isArray(data.categories)) {
+  data.categories.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+// Normalize and sort tools
+if (Array.isArray(data.tools)) {
+  data.tools.sort((a, b) => a.name.localeCompare(b.name));
+
+  for (const tool of data.tools) {
+    if (Array.isArray(tool.tags)) {
+      tool.tags = [...new Set(tool.tags.map(normalizeTag).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+    }
+
+    if (Array.isArray(tool.techStack)) {
+      tool.techStack.sort((a, b) => a.localeCompare(b));
+    }
+  }
+}
+
+// Normalize and sort quests
+if (Array.isArray(data.quests)) {
+  data.quests.sort((a, b) => a.name.localeCompare(b.name));
+
+  for (const quest of data.quests) {
+    if (Array.isArray(quest.tags)) {
+      quest.tags = [...new Set(quest.tags.map(normalizeTag).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+    }
+
+    if (Array.isArray(quest.techStack)) {
+      quest.techStack.sort((a, b) => a.localeCompare(b));
+    }
+  }
+}
+
+// Normalize and sort quizzes
+if (Array.isArray(data.quizzes)) {
+  data.quizzes.sort((a, b) => a.name.localeCompare(b.name));
+
+  for (const quiz of data.quizzes) {
+    if (Array.isArray(quiz.tags)) {
+      quiz.tags = [...new Set(quiz.tags.map(normalizeTag).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+    }
+
+    if (Array.isArray(quiz.techStack)) {
+      quiz.techStack.sort((a, b) => a.localeCompare(b));
+    }
+  }
+}
+
+// Normalize and sort designs (design-system.json)
+if (Array.isArray(data.designs)) {
+  data.designs.sort((a, b) => a.name.localeCompare(b.name));
+
+  for (const design of data.designs) {
+    if (Array.isArray(design.tags)) {
+      design.tags = [...new Set(design.tags.map(normalizeTag).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+    }
+
+    if (Array.isArray(design.techStack)) {
+      design.techStack.sort((a, b) => a.localeCompare(b));
+    }
+
+    if (Array.isArray(design.frameworks)) {
+      design.frameworks.sort((a, b) => a.localeCompare(b));
+    }
+  }
+}
+
+// Normalize and sort instruments (instruments.json)
+if (Array.isArray(data.instruments)) {
+  data.instruments.sort((a, b) => a.name.localeCompare(b.name));
+
+  for (const instrument of data.instruments) {
+    if (Array.isArray(instrument.tags)) {
+      instrument.tags = [...new Set(instrument.tags.map(normalizeTag).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+    }
+
+    if (Array.isArray(instrument.techStack)) {
+      instrument.techStack.sort((a, b) => a.localeCompare(b));
+    }
+  }
+}
+
+// Sort theme arrays (themes.json: { resume: [...], portfolio: [...] })
+for (const pillar of ["resume", "portfolio"]) {
+  if (Array.isArray(data[pillar])) {
+    data[pillar].sort((a, b) => a.name.localeCompare(b.name));
+  }
+}
+
+fs.writeFileSync(file, JSON.stringify(data, null, 2) + "\n", "utf8");
+
+console.log(`✓ Normalized and sorted: ${file}`);
