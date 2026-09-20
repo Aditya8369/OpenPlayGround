@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Build script for One File Tools.
+ * Build script for OpenPlayGround.
  *
  * Reads tools.json and generates index.html with 5 switchable design layouts.
  * Zero npm dependencies - runs with plain Node.js.
