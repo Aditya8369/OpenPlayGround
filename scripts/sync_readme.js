@@ -41,7 +41,7 @@ const rows = liveTools.map((t, i) => {
   const file = `tools/${t.id}.html`;
   const category = catMap[t.category] || t.category;
   const desc = t.shortDescription;
-  const live = `${site.url}/tools/${t.id}`;
+  const live = `${site.url}/tools/${t.id}.html`;
   return `| ${num} | [${name}](${file}) | ${category} | ${desc} | [Try it](${live}) |`;
 });
 
