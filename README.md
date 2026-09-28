@@ -42,12 +42,18 @@ Standalone browser utilities for design, SEO, formatting, and day-to-day softwar
 | [**Animation Cubic-Bezier Editor**](tools/animation-cubic-bezier-editor.html) | CSS | Easy | Interactive visual curve editor with draggable control points, standard presets (`ease`, `ease-in-out`, etc.), and live animation comparison box. |
 | [**Bash Sandbox**](tools/bash-commands-sandbox.html) | Utilities | Medium | Client-side simulated Linux/Bash terminal with virtual filesystem, persistent history, tab completion, and core command emulation (`ls`, `cd`, `mkdir`, `cat`, `echo`, `pwd`). |
 | [**Commit Message & Range Cleaner**](tools/git-commit-range-cleaner.html) | Utilities | Medium | Visual interactive rebase planner (`git-rebase-todo` generator). Lints commit messages against Conventional Commits specs with instant autofix suggestions. |
+| [**Commit Message Generator**](tools/commit-message-generator.html) | Utilities | Easy | Visual Conventional Commits builder with live preview, syntax highlighting, type selection, breaking change indicators, and instant copy commands. |
+| [**CSS Animation Builder**](tools/css-animation-builder.html) | CSS | Medium | Visually construct custom CSS animations with presets, interactive property controls, live preview canvas, and instant CSS keyframe export. |
 | [**CSS Easing Visualizer**](tools/css-easing-visualizer.html) | CSS | Medium | Side-by-side easing curve comparison on a synchronized SVG graph and real-time multi-ball animation race track powered by the Web Animations API. |
 | [**CSS Unit Converter**](tools/css-unit-converter.html) | CSS | Medium | Real-time bi-directional converter across `px`, `rem`, `em`, `vw`, `vh`, `%`, and `pt` with configurable base font size and viewport context. |
 | [**Curl Builder**](tools/curl-builder.html) | JSON & API | Medium | Construct REST API cURL commands with URL query params, authentication headers (Bearer / Basic), form data, JSON payloads, and multipart file uploads. |
 | [**Favicon Generator**](tools/favicon-generator.html) | Utilities | Easy | Client-side favicon generation supporting 7 dimensions (16px to 512px) with auto-crop canvas preview, HTML meta snippet generation, and 1-click ZIP export. |
+| [**Git Ignore Generator**](tools/git-ignore-generator.html) | Utilities | Easy | Generate boilerplate `.gitignore` files tailored to over 20 development stacks with searchable tags, live preview, and 1-click export. |
 | [**GitHub Profile README Generator**](tools/github-profile-readme-generator.html) | Utilities | Medium | Live Markdown builder with bio templates, tech stack skill badges, social link icons, and live GitHub stats fetching. |
+| [**JSON CSV Converter**](tools/json-csv-converter.html) | JSON & API | Easy | Bidirectional conversion between JSON and CSV with customizable delimiters (comma, tab, semicolon, pipe), validation, and live data statistics. |
+| [**Markdown Previewer**](tools/markdown-previewer.html) | Text & Content | Medium | Real-time GitHub Flavored Markdown editor with highlight.js syntax highlighting, split/fullscreen view modes, word count, and persistent local storage auto-save. |
 | [**Sitemap Generator**](tools/sitemap-generator.html) | Web & SEO | Medium | Generate search engine-compliant `sitemap.xml` files with single/bulk URL import, `changefreq`, `priority`, and `lastmod` metadata. |
+| [**YAML / JSON Converter**](tools/yaml-json-converter.html) | JSON & API | Easy | Bidirectional converter between YAML and JSON with real-time schema validation, custom indentation settings, and instant swap controls. |
 
 ---
 
@@ -97,8 +103,7 @@ Rapid-fire, browser-based quiz challenges to test your core engineering knowledg
 - **[Closure Chronicles](quizzes/closure-chronicles.html)** — 10-level interactive code challenge on JavaScript lexical scope, hoisting, closures, and modules.
 - **[Command Line Craze](quizzes/command-line-craze.html)** — 10-level retro CRT terminal quiz covering essential Bash and shell commands.
 - **[CSS Grid Quest](quizzes/css-grid-quest.html)** — Interactive quiz testing CSS grid column definitions, fractional units, and layout properties.
-- **[Dev Escape Room](quizzes/dev_escape_room.html)** — Multi-room challenge testing HTML, CSS, JavaScript, Git, and REST API troubleshooting.
-- **[Event Loop Arena](quizzes/event-loop-arena.html)** — 10-level async execution challenge predicting output order between `setTimeout`, microtasks, Promises, and `async/await`.
+- **[Dev Escape Room](quizzes/dev-escape-room.html)** — Multi-room challenge testing HTML, CSS, JavaScript, Git, APIs, and JSON troubleshooting.
 - **[Git Commands Guru](quizzes/git-commands-guru.html)** — Retro terminal quiz covering branching, staging, stashing, and remote syncing.
 - **[HTTP Status Code Quiz](quizzes/http-status-code-quiz.html)** — Rapid scenario-based quiz testing 1xx, 2xx, 3xx, 4xx, and 5xx status codes.
 - **[JS Type Coercion Trivia](quizzes/js-type-coercion-trivia.html)** — Test your understanding of JavaScript's tricky implicit/explicit type coercion behaviors, `NaN`, and equality rules.
@@ -119,12 +124,12 @@ Generate production-ready personal websites and ATS-compliant resumes from a sin
 - **Opus 5** — Two-column card design with muted teal accents, brass honors, and print optimization.
 
 ### Portfolio Themes (`portfolio/`)
-- **Developer** — Tech-forward developer portfolio with interactive project cards, skills matrices, timeline displays, and testimonials.
-- **Desert** — Warm, golden-sand color palette with bronze accents and modern typography.
-- **Fable** — Immersive dark developer showcase with rich visual hierarchy.
-- **Pastel** — Soft, modern pastel gradient aesthetic with minimal cards.
-- **Retro** — 90s CRT-inspired desktop interface and operating system theme.
-- **Space** — Futuristic dark interface with animated starfields and monospace typography.
+- **Desert** — An elegant, sandy theme with a golden-beige gradient and bronze accents.
+- **Developer** — Dark developer-focused portfolio with interactive project cards, skills matrices, timeline displays, and testimonials.
+- **Fable** — Dark developer-focused portfolio created by Fable.
+- **Pastel** — A cute and minimalist theme with an animated gradient background and soft color scheme.
+- **Retro** — A CRT-inspired desktop interface with a retro operating system aesthetic.
+- **Space** — A dark, futuristic theme with an animated starfield background and monospace typography.
 
 ---
 
@@ -155,7 +160,8 @@ npm run themes
 # Validate all assets, JSON schemas, and files
 npm run validate
 ```
-Note- For public deployment, click [https://reliable-lokum-c2dc61.netlify.app/](url)
+> 🌐 **Live Demo:** Explore the deployed site at [reliable-lokum-c2dc61.netlify.app](https://reliable-lokum-c2dc61.netlify.app/).
+
 ---
 
 ## 📂 Project Structure
@@ -175,13 +181,16 @@ OpenPlayGround/
 ├── instruments/                # Web Audio standalone instrument HTML files
 ├── portfolio/                  # Portfolio templates (.hbs & compiled .html)
 ├── quests/                     # Interactive quest game HTML files
+├── quizzes/                    # Interactive quiz game HTML files
 ├── resume/                     # Resume templates (.hbs & compiled .html)
 ├── scripts/                    # Automation and build scripts
 │   ├── build.js                # Core index.html generator
+│   ├── generate_index.js       # Alternative index generator
+│   ├── index-template.txt      # Main portal template
+│   ├── sort_norm.js            # JSON schema sorter and normalizer
+│   ├── sync_readme.js          # Tools table synchronizer
 │   ├── theme-gen.js            # Handlebars theme compiler
-│   ├── validate.js             # Asset & structure validator
-│   ├── sort-norm.js            # JSON schema sorter and normalizer
-│   └── index-template.txt      # Main portal template
+│   └── validate.js             # Asset & structure validator
 ├── tools/                      # Single-file developer tools
 ├── index.html                  # Main portal entrypoint
 └── package.json                # Project scripts & metadata
@@ -198,6 +207,7 @@ OpenPlayGround/
 | **Validate** | `npm run validate` | Audits all JSON metadata entries against real files on disk. |
 | **Format** | `npm run format` | Runs Prettier on standalone HTML utilities. |
 | **Sort JSON** | `npm run sort` | Normalizes and alphabetically sorts all registry data files. |
+| **Sync Readme** | `npm run sync-readme` | Synchronizes the tools table in `README.md` from `data/tools.json`. |
 
 ---
 
