@@ -67,7 +67,10 @@ Gamified, story-driven browser games designed to teach core engineering principl
 | [**Regex CSS Golf**](quests/regex-css-golf.html) | CSS Fundamentals | Medium | Code golf puzzle engine: write the shortest valid CSS selector matching only target DOM elements using combinators, pseudo-classes, and attribute filters. |
 | [**Strata: The Lost Commits**](quests/the-lost-commits.html) | Git & Version Control | Medium | Archaeological commit history dig. Map `git rebase -i` actions (Pick, Reword, Squash, Fixup, Drop) to excavation tools to restore archaeological logs. |
 | [**The Merge Conflict from Hell**](quests/merge-conflict-from-hell.html) | Git & Version Control | Medium | Terminal horror escape room. Resolve multi-hunk merge conflicts, fix detached HEAD states, and force push under a draining sanity meter with synthetic Web Audio SFX. |
-| [**The Reconciler**](quests/the-reconciler.html) | React Fundamentals | Hard | Victorian manor horror powered by a live fiber-tree diagram. Fix one-way prop flow, unmount leaks, and reconciliation key collisions floor by floor. |
+| [**Microtask Heist**](quests/microtask-heist.html) | JS Fundamentals | Medium | Heist-themed JavaScript quest to orchestrate Promise chains and queueMicrotask calls to produce an exact execution order. |
+| [**SQL Query Challenge**](quests/sql-query-challenge.html) | General Dev | Easy | Interactive SQLite WASM query challenges covering filtering, sorting, aggregations, and multi-table joins. |
+| [**Terminal Speed Run**](quests/terminal-speed-run.html) | General Dev | Medium | Fast-paced CLI speed run challenge where you execute essential terminal commands against the clock. |
+| [**The Branch That Wouldn't Die**](quests/branch-that-wouldnt-die.html) | Git & Version Control | Hard | Git survival horror arcade game. Merge, rebase, or delete rotting branches before chaotic decay consumes main. |
 | [**XSS Defender**](quests/xss-defender.html) | JS Fundamentals | Medium | Security simulator game. Defend applications against Reflected XSS, DOM-based injections, HTML entity bypasses, and configure strict Content Security Policies (CSP). |
 
 ---
@@ -83,6 +86,7 @@ Playable musical instruments and synthesizers built entirely using the native br
 | [**Interactive Fretboard & Chord Explorer**](instruments/interactive-fretboard-chord-explorer.html) | Chords & Harmony | Skeuomorphic dark-wood guitar fretboard with chord calculation engine and physical-modeling acoustic string synthesis triggered by cursor swipe strumming. |
 | [**Interactive Theory Sandbox**](instruments/interactive-theory-sandbox.html) | Notation & Theory | Bi-directional bridge between the standard grand staff notation and visual piano keys with dynamic chord recognition and interval analysis. |
 | [**Neon Launchpad Matrix**](instruments/neon-launchpad-matrix.html) | Melody & Performance | 8x8 neon neumorphic pad matrix mapped to a harmonious pentatonic scale with tactile visual ripples and zero-latency audio synthesis. |
+| [**NEQ-808 Pro Synthesizer**](instruments/neq-808-pro.html) | Rhythm & Percussion | Neumorphic 808-style drum machine and 16-step grid sequencer with classic synthesized analog drum voices and dynamic audio controls. |
 
 ---
 

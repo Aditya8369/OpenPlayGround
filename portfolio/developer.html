@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jane Doe — Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #e4e4e7;
+            background: #09090b;
+        }
+
+        a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+            border-bottom: 1px solid #27272a;
+        }
+
+        .hero-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #3b82f6;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fafafa;
+            margin-bottom: 4px;
+        }
+
+        .hero .title {
+            font-size: 1.1rem;
+            color: #3b82f6;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .hero .bio {
+            max-width: 600px;
+            margin: 0 auto 20px;
+            color: #a1a1aa;
+            font-size: 0.95rem;
+        }
+
+        .hero-links {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hero-links a {
+            font-size: 0.85rem;
+            padding: 6px 16px;
+            border-radius: 6px;
+            border: 1px solid #27272a;
+            color: #a1a1aa;
+            transition: all 0.2s;
+        }
+
+        .hero-links a:hover {
+            border-color: #3b82f6;
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        /* Section */
+        section {
+            padding: 48px 0;
+            border-bottom: 1px solid #27272a;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fafafa;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        h2 span {
+            color: #3b82f6;
+        }
+
+        /* Project cards */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .project-card {
+            border: 1px solid #27272a;
+            border-radius: 12px;
+            padding: 24px;
+            background: #18181b;
+            transition: border-color 0.2s;
+        }
+
+        .project-card:hover {
+            border-color: #3b82f6;
+        }
+
+        .project-card h3 {
+            font-size: 1.15rem;
+            color: #fafafa;
+            margin-bottom: 4px;
+        }
+
+        .project-card .tagline {
+            font-size: 0.85rem;
+            color: #3b82f6;
+            margin-bottom: 10px;
+        }
+
+        .project-card p {
+            font-size: 0.9rem;
+            color: #a1a1aa;
+            margin-bottom: 12px;
+        }
+
+        .project-card .tech {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .project-card .tech span {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: #27272a;
+            color: #a1a1aa;
+        }
+
+        .project-card .highlights {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 12px;
+        }
+
+        .project-card .highlights li {
+            font-size: 0.85rem;
+            color: #a1a1aa;
+            padding-left: 16px;
+            position: relative;
+            margin-bottom: 4px;
+        }
+
+        .project-card .highlights li::before {
+            content: "->";
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+        }
+
+        .project-card .links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .project-card .links a {
+            font-size: 0.8rem;
+            color: #60a5fa;
+            padding: 4px 10px;
+            border: 1px solid #27272a;
+            border-radius: 4px;
+        }
+
+        .project-card .links a:hover {
+            border-color: #3b82f6;
+            text-decoration: none;
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-group {
+            border: 1px solid #27272a;
+            border-radius: 10px;
+            padding: 20px;
+            background: #18181b;
+        }
+
+        .skill-group h3 {
+            font-size: 0.9rem;
+            color: #3b82f6;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .skill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .skill-item .name {
+            font-size: 0.85rem;
+            color: #e4e4e7;
+        }
+
+        .skill-item .level {
+            font-size: 0.7rem;
+            color: #71717a;
+            text-transform: capitalize;
+        }
+
+        /* Experience timeline */
+        .timeline {
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 4px;
+            top: 8px;
+            bottom: 8px;
+            width: 1px;
+            background: #27272a;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 28px;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -24px;
+            top: 8px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #3b82f6;
+            border: 2px solid #09090b;
+        }
+
+        .timeline-item h3 {
+            font-size: 1rem;
+            color: #fafafa;
+        }
+
+        .timeline-item .meta {
+            font-size: 0.85rem;
+            color: #71717a;
+            margin-bottom: 6px;
+        }
+
+        .timeline-item p {
+            font-size: 0.9rem;
+            color: #a1a1aa;
+        }
+
+        /* Talks */
+        .talks-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .talk-item {
+            padding: 16px;
+            border: 1px solid #27272a;
+            border-radius: 8px;
+            background: #18181b;
+        }
+
+        .talk-item h3 {
+            font-size: 0.95rem;
+            color: #fafafa;
+            margin-bottom: 4px;
+        }
+
+        .talk-item .meta {
+            font-size: 0.8rem;
+            color: #71717a;
+            margin-bottom: 8px;
+        }
+
+        .talk-item .talk-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .talk-item .talk-links a {
+            font-size: 0.8rem;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .testimonial-card {
+            padding: 20px;
+            border: 1px solid #27272a;
+            border-radius: 10px;
+            background: #18181b;
+        }
+
+        .testimonial-card blockquote {
+            font-size: 0.9rem;
+            color: #a1a1aa;
+            font-style: italic;
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        .testimonial-card cite {
+            font-size: 0.8rem;
+            color: #71717a;
+            font-style: normal;
+        }
+
+        .testimonial-card cite strong {
+            color: #e4e4e7;
+        }
+
+        /* Publications */
+        .pub-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .pub-item {
+            padding: 14px;
+            border: 1px solid #27272a;
+            border-radius: 8px;
+            background: #18181b;
+        }
+
+        .pub-item a {
+            font-size: 0.95rem;
+            color: #fafafa;
+            font-weight: 500;
+        }
+
+        .pub-item a:hover {
+            color: #60a5fa;
+        }
+
+        .pub-item .meta {
+            font-size: 0.8rem;
+            color: #71717a;
+            margin-top: 4px;
+        }
+
+        /* Awards, Certs */
+        .list-cards {
+            display: grid;
+            gap: 12px;
+        }
+
+        .list-card {
+            padding: 16px;
+            border: 1px solid #27272a;
+            border-radius: 8px;
+            background: #18181b;
+        }
+
+        .list-card h3 {
+            font-size: 0.95rem;
+            color: #fafafa;
+            margin-bottom: 4px;
+        }
+
+        .list-card .meta {
+            font-size: 0.8rem;
+            color: #71717a;
+        }
+
+        .list-card p {
+            font-size: 0.85rem;
+            color: #a1a1aa;
+            margin-top: 6px;
+        }
+
+        /* Tags (interests, languages) */
+        .tag-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 0.8rem;
+            padding: 5px 14px;
+            border-radius: 999px;
+            border: 1px solid #27272a;
+            color: #a1a1aa;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #52525b;
+        }
+
+        footer a {
+            color: #60a5fa;
+        }
+
+        /* Responsive */
+        @media (min-width: 640px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="hero">
+            <img class="hero-photo" src="https://i.sstatic.net/2fRi5z4Ml.png" alt="Jane Doe">
+            <h1>Jane Doe</h1>
+            <div class="title">Senior Full Stack Developer</div>
+            <p class="bio">A passionate developer with 8+ years of experience building products that serve millions of users. I care deeply about developer experience, performance, and clean architecture. When I&#x27;m not coding, you&#x27;ll find me rock climbing or brewing specialty coffee.</p>
+            <div class="hero-links">
+                <a href="mailto:jane@example.com">Email</a>
+                <a href="https://example.com/">example.com/</a>
+                <a href="https://example.com/">GitHub</a><a href="https://example.com/">LinkedIn</a><a href="https://example.com/">Twitter / X</a><a href="https://example.com/">Blog</a>
+                <span
+                    style="font-size:0.85rem;color:#71717a;padding:6px 0">San Francisco, California, United States (Remote)</span>
+            </div>
+        </div>
+
+        <section>
+            <h2><span>//</span> Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>DevDash</h3>
+                    <div class="tagline">Developer productivity dashboard</div>
+                    <p>An open-source developer dashboard that aggregates GitHub activity, CI/CD pipeline status, and infrastructure monitoring into a single real-time view. Built for teams that want visibility without context-switching.</p>
+                    <div class="tech">
+                        <span>React</span><span>Node.js</span><span>GraphQL</span><span>Redis</span><span>WebSockets</span>
+                    </div>
+                    <ul class="highlights">
+                        <li>2,500+ GitHub stars</li><li>Featured in JavaScript Weekly and Node Weekly</li><li>Used by 500+ development teams worldwide</li>
+                    </ul>
+                    <div class="links">
+                        <a href="https://example.com/">Live</a>
+                        <a href="https://example.com/">Source</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>SnapCSS</h3>
+                    <div class="tagline">Visual CSS debugging tool</div>
+                    <p>A browser extension that lets you visually inspect, edit, and export CSS in real time. Think DevTools, but focused entirely on design iteration.</p>
+                    <div class="tech">
+                        <span>TypeScript</span><span>Chrome Extensions API</span><span>CSS</span>
+                    </div>
+                    <ul class="highlights">
+                        <li>8,000+ Chrome Web Store installs</li><li>4.8-star rating from 200+ reviews</li>
+                    </ul>
+                    <div class="links">
+                        <a href="https://example.com/">Live</a>
+                        <a href="https://example.com/">Source</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Notely</h3>
+                    <div class="tagline">Markdown note-taking PWA</div>
+                    <p>An offline-first Progressive Web App for Markdown note-taking with real-time sync, full-text search, and nested folder organization.</p>
+                    <div class="tech">
+                        <span>Svelte</span><span>IndexedDB</span><span>Service Workers</span><span>CRDTs</span>
+                    </div>
+                    <ul class="highlights">
+                        <li>Works entirely offline with automatic sync when online</li><li>Conflict-free real-time collaboration using CRDTs</li>
+                    </ul>
+                    <div class="links">
+                        <a href="https://example.com/">Live</a>
+                        <a href="https://example.com/">Source</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2><span>//</span> Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-group">
+                    <h3>Frontend</h3>
+                    <div class="skill-item">
+                        <span class="name">JavaScript / TypeScript</span>
+                        <span class="level">expert</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="name">React / Next.js</span>
+                        <span class="level">expert</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="name">HTML5 &amp; CSS3</span>
+                        <span class="level">expert</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="name">Tailwind CSS</span>
+                        <span class="level">advanced</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="name">Vue.js</span>
+                        <span class="level">intermediate</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <h3>Backend</h3>
+                    <div class="skill-item">
+                        <span class="name">Node.js</span>
+                        <span class="level">expert</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="name">Python</span>
+                        <span class="level">intermediate</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="name">PostgreSQL</span>
+                        <span class="level">advanced</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="name">Redis</span>
+                        <span class="level">advanced</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="name">GraphQL</span>
+                        <span class="level">advanced</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <h3>DevOps &amp; Cloud</h3>
+                    <div class="skill-item">
+                        <span class="name">AWS (EC2, S3, Lambda, RDS)</span>
+                        <span class="level">advanced</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="name">Docker &amp; Kubernetes</span>
+                        <span class="level">advanced</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="name">CI/CD (GitHub Actions, Jenkins)</span>
+                        <span class="level">advanced</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="name">Terraform</span>
+                        <span class="level">intermediate</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <h3>Tools &amp; Practices</h3>
+                    <div class="skill-item">
+                        <span class="name">Git &amp; GitHub</span>
+                        <span class="level">expert</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="name">Agile / Scrum</span>
+                        <span class="level">advanced</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="name">TDD / Testing</span>
+                        <span class="level">advanced</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="name">System Design</span>
+                        <span class="level">advanced</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2><span>//</span> Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Senior Full Stack Developer</h3>
+                    <div class="meta">TechCorp Inc. &middot; Mar 2022 — Present
+                        &middot; San Francisco, CA</div>
+                    <p>Leading the frontend architecture team for a B2B SaaS platform serving 50K+ enterprise users.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Full Stack Developer</h3>
+                    <div class="meta">StartupXYZ &middot; Jun 2019 — Feb 2022
+                        &middot; Remote</div>
+                    <p>Core developer at a Series A fintech startup building payment infrastructure.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Frontend Developer</h3>
+                    <div class="meta">WebAgency Co. &middot; Jan 2017 — May 2019
+                        &middot; New York, NY</div>
+                    <p>Built responsive web applications for enterprise clients across healthcare, finance, and retail.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2><span>//</span> Talks</h2>
+            <div class="talks-list">
+                <div class="talk-item">
+                    <h3>The Future of Server Components</h3>
+                    <div class="meta">ReactConf 2025 &middot; May 2025 &middot; Las Vegas, NV
+                    </div>
+                    <div class="talk-links">
+                        <a href="https://example.com/">Slides</a>
+                        <a href="https://example.com/">Video</a>
+                    </div>
+                </div>
+                <div class="talk-item">
+                    <h3>Building Offline-First Web Apps</h3>
+                    <div class="meta">JSConf EU 2024 &middot; Sep 2024 &middot; Berlin, Germany
+                    </div>
+                    <div class="talk-links">
+                        <a href="https://example.com/">Slides</a>
+                        <a href="https://example.com/">Video</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2><span>//</span> Publications</h2>
+            <div class="pub-list">
+                <div class="pub-item">
+                    <a href="https://example.com/">Scaling React Applications: Patterns and Anti-Patterns</a>
+                    <div class="meta">Smashing Magazine &middot; Mar 2025</div>
+                </div>
+                <div class="pub-item">
+                    <a href="https://example.com/">The Case for Server Components in 2025</a>
+                    <div class="meta">CSS-Tricks &middot; Jan 2025</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2><span>//</span> Testimonials</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <blockquote>"Jane is one of the most talented developers I&#x27;ve had the pleasure of working with. Her ability to break down complex architectural problems into clean, maintainable solutions is exceptional."</blockquote>
+                    <cite><strong>John Smith</strong>, CTO at
+                        TechCorp Inc.</cite>
+                </div>
+                <div class="testimonial-card">
+                    <blockquote>"She didn&#x27;t just write code — she elevated our entire engineering culture. Her code reviews alone made every developer on the team better."</blockquote>
+                    <cite><strong>Sarah Chen</strong>, VP of Engineering at
+                        StartupXYZ</cite>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2><span>//</span> Certifications</h2>
+            <div class="list-cards">
+                <div class="list-card">
+                    <h3>AWS Solutions Architect — Associate</h3>
+                    <div class="meta">Amazon Web Services &middot; Jan 2024</div>
+                </div>
+                <div class="list-card">
+                    <h3>Google Cloud Professional Developer</h3>
+                    <div class="meta">Google Cloud &middot; Jun 2023</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2><span>//</span> Awards</h2>
+            <div class="list-cards">
+                <div class="list-card">
+                    <h3>Open Source Contributor of the Year</h3>
+                    <div class="meta">DevAwards &middot; 2025</div>
+                    <p>Recognized for significant open source contributions to the JavaScript ecosystem</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2><span>//</span> Education</h2>
+            <div class="list-cards">
+                <div class="list-card">
+                    <h3>Bachelor of Science in Computer Science</h3>
+                    <div class="meta">University of California, Berkeley &middot; 2012 — 2016
+                        &middot; GPA: 3.8 / 4.0</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2><span>//</span> Languages</h2>
+            <div class="tag-row">
+                <span class="tag">English (native)</span><span class="tag">Spanish (conversational)</span><span class="tag">Japanese (basic)</span>
+            </div>
+        </section>
+
+        <section>
+            <h2><span>//</span> Volunteer</h2>
+            <div class="list-cards">
+                <div class="list-card">
+                    <h3>Volunteer Developer</h3>
+                    <div class="meta">Code for America &middot; Jan 2023 — Present</div>
+                    <p>Building open-source civic tech tools for local government transparency and public data access.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2><span>//</span> Interests</h2>
+            <div class="tag-row">
+                <span class="tag">Open Source</span><span class="tag">Developer Tooling</span><span class="tag">System Design</span><span class="tag">Rock Climbing</span><span class="tag">Specialty Coffee</span><span class="tag">Photography</span>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>Built with <a href="https://github.com/Aditya8369/OpenPlayGround">One File Tools</a></p>
+    </footer>
+
+</body>
+
+</html>

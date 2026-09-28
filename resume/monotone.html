@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jane Doe — Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&family=Overpass+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        /* === Reset === */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            background-color: #000;
+            background-image: repeating-linear-gradient(90deg,
+                    /* Straight (horizontal) stripes */
+                    transparent,
+                    transparent 25px,
+                    rgba(221, 221, 221, 0.05) 25px,
+                    /* #ddd color */
+                    rgba(221, 221, 221, 0.05) 28px,
+                    /* Thicker stripe */
+                    transparent 28px,
+                    transparent 50px,
+                    rgba(221, 221, 221, 0.05) 50px,
+                    rgba(221, 221, 221, 0.05) 54px
+                    /* Thicker stripe */
+                );
+        }
+
+        /* === Base === */
+        body {
+            font-family: 'Courier Prime', Courier, monospace;
+            font-size: 9pt;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+            padding: 2rem;
+            max-width: 8.5in;
+            margin: 2rem auto;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Overpass Mono', monospace;
+            color: #000;
+            margin-bottom: 0.5em;
+        }
+
+        h1 {
+            font-size: 22pt;
+            letter-spacing: 1px;
+            /* Replaced dashed border with a background-image for longer dashes */
+            border-bottom: 2px solid transparent;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            background-image: linear-gradient(to right, #000 75%, transparent 25%);
+            background-repeat: repeat-x;
+            background-position: bottom;
+            background-size: 12px 2px;
+            /* Creates a 9px dash and a 3px gap */
+            -webkit-print-color-adjust: exact;
+            /* Ensures the line prints */
+            print-color-adjust: exact;
+        }
+
+        h2 {
+            font-size: 13pt;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+            margin-top: 1.5rem;
+        }
+
+        h3 {
+            font-size: 10pt;
+            font-weight: bold;
+        }
+
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* === Print === */
+        @page {
+            size: A4;
+            margin: 15mm 20mm;
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                /* Ensure print background is white */
+                border: none;
+                box-shadow: none;
+                margin: 0;
+                max-width: 100%;
+            }
+        }
+
+        /* === Layout === */
+        .container {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 33%;
+            padding-right: 2rem;
+        }
+
+        .main-content {
+            width: 67%;
+            padding-left: 2rem;
+            border-left: 1px dashed #ccc;
+        }
+
+        header {
+            margin-bottom: 2rem;
+        }
+
+        .contact-info p {
+            font-size: 8pt;
+            color: #555;
+            margin-bottom: 0.25em;
+        }
+
+        .social-links-container a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3em;
+        }
+
+        .social-link-icon {
+            width: 1.1em;
+            height: 1.1em;
+            fill: currentColor;
+            position: relative;
+            top: -0.1em;
+            /* Nudge icon up slightly */
+        }
+
+
+        header .title {
+            /* Title */
+            font-size: 12pt;
+            font-style: italic;
+            color: #222;
+            margin-bottom: 0.5rem;
+        }
+
+        section {
+            margin-bottom: 1.5rem;
+        }
+
+        ul {
+            list-style-position: inside;
+            padding-left: 1em;
+        }
+
+        li {
+            margin-bottom: 0.25em;
+        }
+
+        /* === Sections === */
+        .item-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar .item-container {
+            background-color: #e1e1e1;
+            padding: 1rem;
+            border-radius: 4px;
+            border: 1px solid #eee;
+        }
+
+        /* Two-tone card styling for main content sections */
+        .main-content .structured-card {
+            padding: 0;
+            background-color: transparent;
+            overflow: hidden;
+            border-radius: 4px;
+            border: 1px solid #c8c7c7;
+        }
+
+        .structured-card>h3,
+        .structured-card>.project-header {
+            background-color: #c8c7c7;
+            padding: 0.9rem 1rem;
+            margin-bottom: 0;
+        }
+
+        .structured-card-content {
+            padding: 1rem;
+            background-color: #e1e1e1;
+        }
+
+        .skill-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .item-container>p:first-of-type {
+            font-weight: bold;
+            color: #444;
+        }
+
+        .main-content>section:first-child h2 {
+            margin-top: 0;
+        }
+
+        .skill-item {
+            display: flex;
+        }
+
+        .skill-item strong {
+            width: 120px;
+            flex-shrink: 0;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .project-header h3 {
+            margin-bottom: 0;
+        }
+
+        .project-links {
+            font-size: 8pt;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            font-size: 7pt;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="sidebar">
+            <!-- Header -->
+            <header>
+                <h1>Jane Doe</h1>
+                <p class="title"></p>
+                <div class="contact-info">
+                    <p><a href="mailto:"></a></p>
+                    <p></p>
+                    <p><a href=""></a></p>
+                    <p></p>
+                    <p class="social-links-container">
+                        <a href="https://example.com/">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                class="social-link-icon">
+                                <path fill-rule="evenodd"
+                                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21-.15.46-.55.38A8.013 8.013 0 0 1 8 0Z">
+                                </path>
+                            </svg>
+                            
+                            
+                            
+                            GitHub</a> | <a href="https://example.com/">
+                            
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                class="social-link-icon">
+                                <path
+                                    d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2ZM8 19H5V8h3v11ZM6.5 6.73c-.97 0-1.75-.79-1.75-1.76s.78-1.76 1.75-1.76 1.75.79 1.75 1.76-.78 1.76-1.75 1.76ZM19 19h-3v-5.34c0-1.27-.03-2.9-1.76-2.9-1.76 0-2.04 1.37-2.04 2.8v5.44H9V8h2.88v1.32h.04c.42-.79 1.44-1.62 2.84-1.62 3.03 0 3.59 1.99 3.59 4.58V19Z">
+                                </path>
+                            </svg>
+                            
+                            
+                            LinkedIn</a> | <a href="https://example.com/">
+                            
+                            
+                            
+                            
+                            Twitter / X</a> | <a href="https://example.com/">
+                            
+                            
+                            
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                class="social-link-icon">
+                                <path
+                                    d="M7.775 3.275a.75.75 0 0 0 1.06 1.06l1.25-1.25a2 2 0 1 1 2.83 2.83l-2.5 2.5a2 2 0 0 1-2.83 0 .75.75 0 0 0-1.06 1.06 3.5 3.5 0 0 0 4.95 0l2.5-2.5a3.5 3.5 0 0 0-4.95-4.95l-1.25 1.25Zm-4.69 9.64a.75.75 0 0 0-1.06-1.06l-1.25 1.25a2 2 0 0 1-2.83-2.83l2.5-2.5a2 2 0 0 1 2.83 0 .75.75 0 0 0 1.06-1.06 3.5 3.5 0 0 0-4.95 0l-2.5 2.5a3.5 3.5 0 0 0 4.95 4.95l1.25-1.25Z">
+                                </path>
+                            </svg>
+                            Blog</a>
+                    </p>
+                </div>
+            </header>
+
+            <!-- Education -->
+            <section>
+                <h2>✦︎ Education</h2>
+                <div class="item-container">
+                    <h3>Bachelor of Science in </h3>
+                    <p>University of California, Berkeley | 2012 — 2016</p>
+                </div>
+            </section>
+
+            <!-- Languages -->
+            <section>
+                <h2>✦︎ Languages</h2>
+                <div class="item-container" style="padding: 0.75rem; margin-bottom: 0.75rem;">
+                    <p><strong>English:</strong> native</p>
+                </div>
+                <div class="item-container" style="padding: 0.75rem; margin-bottom: 0.75rem;">
+                    <p><strong>Spanish:</strong> conversational</p>
+                </div>
+                <div class="item-container" style="padding: 0.75rem; margin-bottom: 0.75rem;">
+                    <p><strong>Japanese:</strong> basic</p>
+                </div>
+            </section>
+
+            <!-- Interests -->
+            <section>
+                <h2>✦︎ Interests</h2>
+                <div class="item-container">
+                    <p>Open Source, Developer Tooling, System Design, Rock Climbing, Specialty Coffee, Photography</p>
+                </div>
+            </section>
+        </div>
+
+        <div class="main-content">
+            <!-- Summary -->
+            <section>
+                <h2>✦︎ Summary</h2>
+                <p>Experienced full stack developer specializing in React, Node.js, and cloud architecture. Passionate about open source, developer tooling, and building products that make developers&#x27; lives easier. Speaker at 10+ conferences, maintainer of 3 popular open source projects with 15K+ combined GitHub stars.</p>
+            </section>
+
+            <!-- Experience -->
+            <section>
+                <h2>✦︎ Experience</h2>
+                <div class="item-container structured-card">
+                    <h3>Senior Full Stack Developer</h3>
+                    <div class="structured-card-content">
+                        <p>TechCorp Inc. | Mar 2022 — Present</p>
+                        <p></p>
+                        <ul>
+                            <li>Architected a micro-frontend system that reduced deploy times by 60% and enabled independent team releases</li><li>Led migration from legacy jQuery codebase to React, improving page load performance by 40%</li><li>Built a real-time collaboration engine using WebSockets serving 10K concurrent connections</li><li>Mentored 5 junior developers through structured code review and pair programming sessions</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="item-container structured-card">
+                    <h3>Full Stack Developer</h3>
+                    <div class="structured-card-content">
+                        <p>StartupXYZ | Jun 2019 — Feb 2022</p>
+                        <p></p>
+                        <ul>
+                            <li>Built the merchant onboarding flow from scratch, reducing signup time from 2 days to 15 minutes</li><li>Designed and implemented a webhook delivery system processing 1M+ events daily with 99.97% reliability</li><li>Introduced end-to-end testing with Cypress, reducing production bugs by 35%</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="item-container structured-card">
+                    <h3>Frontend Developer</h3>
+                    <div class="structured-card-content">
+                        <p>WebAgency Co. | Jan 2017 — May 2019</p>
+                        <p></p>
+                        <ul>
+                            <li>Delivered 12+ client projects on time and within budget</li><li>Built an internal component library used across 8 projects, reducing development time by 30%</li><li>Introduced automated accessibility testing, achieving WCAG 2.1 AA compliance across all projects</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects -->
+            <section>
+                <h2>✦︎ Projects</h2>
+                <div class="item-container structured-card">
+                    <div class="project-header">
+                        <h3>DevDash</h3>
+                        <div class="project-links">
+                            <a href="https://example.com/">Repo</a>
+                             | <a href="https://example.com/">Live</a>
+                        </div>
+                    </div>
+                    <div class="structured-card-content">
+                        <p><strong>Tech:</strong> React, Node.js, GraphQL, Redis, WebSockets</p>
+                        <p></p>
+                        <ul>
+                            <li>2,500+ GitHub stars</li><li>Featured in JavaScript Weekly and Node Weekly</li><li>Used by 500+ development teams worldwide</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="item-container structured-card">
+                    <div class="project-header">
+                        <h3>SnapCSS</h3>
+                        <div class="project-links">
+                            <a href="https://example.com/">Repo</a>
+                             | <a href="https://example.com/">Live</a>
+                        </div>
+                    </div>
+                    <div class="structured-card-content">
+                        <p><strong>Tech:</strong> TypeScript, Chrome Extensions API, CSS</p>
+                        <p></p>
+                        <ul>
+                            <li>8,000+ Chrome Web Store installs</li><li>4.8-star rating from 200+ reviews</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="item-container structured-card">
+                    <div class="project-header">
+                        <h3>Notely</h3>
+                        <div class="project-links">
+                            <a href="https://example.com/">Repo</a>
+                             | <a href="https://example.com/">Live</a>
+                        </div>
+                    </div>
+                    <div class="structured-card-content">
+                        <p><strong>Tech:</strong> Svelte, IndexedDB, Service Workers, CRDTs</p>
+                        <p></p>
+                        <ul>
+                            <li>Works entirely offline with automatic sync when online</li><li>Conflict-free real-time collaboration using CRDTs</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skills -->
+            <section>
+                <h2>✦︎ Skills</h2>
+                <div class="skill-item">
+                    <strong>Frontend:</strong>
+                    <span>JavaScript / TypeScript, React / Next.js, HTML5 &amp; CSS3, Tailwind CSS, Vue.js</span>
+                </div>
+                <div class="skill-item">
+                    <strong>Backend:</strong>
+                    <span>Node.js, Python, PostgreSQL, Redis, GraphQL</span>
+                </div>
+                <div class="skill-item">
+                    <strong>DevOps &amp; Cloud:</strong>
+                    <span>AWS (EC2, S3, Lambda, RDS), Docker &amp; Kubernetes, CI/CD (GitHub Actions, Jenkins), Terraform</span>
+                </div>
+                <div class="skill-item">
+                    <strong>Tools &amp; Practices:</strong>
+                    <span>Git &amp; GitHub, Agile / Scrum, TDD / Testing, System Design</span>
+                </div>
+            </section>
+
+            <!-- Certifications -->
+            <section>
+                <h2>✦︎ Certifications</h2>
+                <div class="item-container structured-card">
+                    <h3>AWS Solutions Architect — Associate</h3>
+                    <div class="structured-card-content">
+                        <p>Amazon Web Services | 2024-01</p>
+                    </div>
+                </div>
+                <div class="item-container structured-card">
+                    <h3>Google Cloud Professional Developer</h3>
+                    <div class="structured-card-content">
+                        <p>Google Cloud | 2023-06</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Publications -->
+            <section>
+                <h2>✦︎ Publications</h2>
+                <div class="item-container structured-card">
+                    <h3><a href="https://example.com/">Scaling React Applications: Patterns and Anti-Patterns</a></h3>
+                    <div class="structured-card-content">
+                        <p>Smashing Magazine | 2025-03</p>
+                    </div>
+                </div>
+                <div class="item-container structured-card">
+                    <h3><a href="https://example.com/">The Case for Server Components in 2025</a></h3>
+                    <div class="structured-card-content">
+                        <p>CSS-Tricks | 2025-01</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Talks -->
+            <section>
+                <h2>✦︎ Talks</h2>
+                <div class="item-container structured-card">
+                    <h3>The Future of Server Components</h3>
+                    <div class="structured-card-content">
+                        <p>ReactConf 2025 | 2025-05 | Las Vegas, NV</p>
+                        <p>
+                            <a href="https://example.com/">Slides</a>
+                             | <a href="https://example.com/">Video</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="item-container structured-card">
+                    <h3>Building Offline-First Web Apps</h3>
+                    <div class="structured-card-content">
+                        <p>JSConf EU 2024 | 2024-09 | Berlin, Germany</p>
+                        <p>
+                            <a href="https://example.com/">Slides</a>
+                             | <a href="https://example.com/">Video</a>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Awards -->
+            <section>
+                <h2>✦︎ Awards</h2>
+                <div class="item-container structured-card">
+                    <h3>Open Source Contributor of the Year</h3>
+                    <div class="structured-card-content">
+                        <p>DevAwards | 2025</p>
+                        <p>Recognized for significant open source contributions to the JavaScript ecosystem</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Volunteer -->
+            <section>
+                <h2>✦︎ Volunteer</h2>
+                <div class="item-container structured-card">
+                    <h3>Volunteer Developer at Code for America</h3>
+                    <div class="structured-card-content">
+                        <p>Jan 2023 — Present</p>
+                        <p>Building open-source civic tech tools for local government transparency and public data access.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonials -->
+            <section>
+                <h2>✦︎ Testimonials</h2>
+                <div class="item-container">
+                    <blockquote
+                        style="border-left: 2px solid #ccc; padding-left: 1em; font-style: italic; margin: 0.5em 0;">
+                        <p>"Jane is one of the most talented developers I&#x27;ve had the pleasure of working with. Her ability to break down complex architectural problems into clean, maintainable solutions is exceptional."</p>
+                    </blockquote>
+                    <p style="text-align: right;"><em>— John Smith, CTO at TechCorp Inc.</em></p>
+                </div>
+                <div class="item-container">
+                    <blockquote
+                        style="border-left: 2px solid #ccc; padding-left: 1em; font-style: italic; margin: 0.5em 0;">
+                        <p>"She didn&#x27;t just write code — she elevated our entire engineering culture. Her code reviews alone made every developer on the team better."</p>
+                    </blockquote>
+                    <p style="text-align: right;"><em>— Sarah Chen, VP of Engineering at StartupXYZ</em></p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer>
+        <p>Built with <a href="https://github.com/Aditya8369/OpenPlayGround">One File Tools</a></p>
+    </footer>
+
+</body>
+
+</html>

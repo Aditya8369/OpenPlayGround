@@ -127,7 +127,9 @@ const portfolioThemes = [
   { id: 'space', name: 'Deep Space Portfolio', desc: 'Dark theme portfolio featuring starry glass cards and cosmic design details.', type: 'theme', thumb: 'portfolio/space.png' },
   { id: 'fable', name: 'Fable Storyteller Portfolio', desc: 'Whimsical, illustrated narrative portfolio theme for creative developers.', type: 'theme', thumb: 'portfolio/fable.png' },
   { id: 'desert', name: 'Warm Desert Portfolio', desc: 'Earthy, sun-soaked color palette with smooth glassmorphism.', type: 'theme', thumb: 'portfolio/desert.png' },
-  { id: 'developer', name: 'Developer Terminal Portfolio', desc: 'Code-first portfolio design with terminal syntax highlighting accents.', type: 'theme', thumb: 'portfolio/developer.png' }
+  { id: 'developer', name: 'Developer Terminal Portfolio', desc: 'Code-first portfolio design with terminal syntax highlighting accents.', type: 'theme', thumb: 'portfolio/developer.png' },
+  { id: 'pastel', name: 'Pastel Minimalist Portfolio', desc: 'A cute and minimalist theme with an animated gradient background and soft color scheme.', type: 'theme', thumb: 'portfolio/pastel.png' },
+  { id: 'retro', name: 'Retro CRT Desktop Portfolio', desc: 'A CRT-inspired desktop interface with a retro operating system aesthetic.', type: 'theme', thumb: 'portfolio/retro.png' }
 ];
 
 [...resumeThemes, ...portfolioThemes].forEach(th => {
