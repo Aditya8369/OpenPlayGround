@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Animation Builder</title>
+    <meta name="description"
+        content="Visually create CSS animations and export keyframes without manually writing CSS." />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg-base: #0b0f19;
+            --bg-panel: #111827;
+            --bg-input: #0f1219;
+            --bg-card: #161e2e;
+            --text-main: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border-color: #374151;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --danger: #ef4444;
+            --focus-ring: rgba(59, 130, 246, 0.3);
+            --header-border: #1f2937;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: var(--bg-base);
+            border-bottom: 1px solid var(--header-border);
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        main {
+            display: flex;
+            flex: 1;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        @media (max-width: 1024px) {
+            main {
+                flex-direction: column;
+            }
+        }
+
+        .left-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            max-width: 500px;
+        }
+
+        .middle-panel {
+            flex: 1;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+        }
+
+        .right-panel {
+            flex: 1;
+            max-width: 450px;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .card-header {
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.75rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .val-display {
+            color: var(--primary);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary);
+        }
+
+        select,
+        input[type="text"] {
+            width: 100%;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        select:focus,
+        input[type="text"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--focus-ring);
+        }
+
+        /* Animation target */
+        .anim-target {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Code Editor */
+        .editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .btn-action {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-action:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        pre {
+            padding: 1.5rem;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            flex: 1;
+        }
+
+        .token-selector {
+            color: #fbbf24;
+        }
+
+        .token-property {
+            color: #60a5fa;
+        }
+
+        .token-value {
+            color: #34d399;
+        }
+
+        .token-keyword {
+            color: #f87171;
+        }
+
+        .timeline-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            background: var(--bg-card);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid var(--border-color);
+        }
+
+        .play-btn {
+            background: var(--primary);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            z-index: 0;
+        }
+
+        .anim-target-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .preset-btn {
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .preset-btn:hover {
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-title">
+            <div class="icon">✨</div>
+            CSS Animation Builder
+        </div>
+    </header>
+
+    <main>
+        <div class="left-panel">
+            <div class="card">
+                <div class="card-header">Animation Presets</div>
+                <div class="preset-grid">
+                    <button class="preset-btn" onclick="applyPreset('bounce')">Bounce</button>
+                    <button class="preset-btn" onclick="applyPreset('pulse')">Pulse</button>
+                    <button class="preset-btn" onclick="applyPreset('spin')">Spin</button>
+                    <button class="preset-btn" onclick="applyPreset('fade')">Fade In</button>
+                    <button class="preset-btn" onclick="applyPreset('slide')">Slide Up</button>
+                    <button class="preset-btn" onclick="applyPreset('shake')">Shake</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">Configuration</div>
+
+                <div class="form-group">
+                    <label>Name <span class="val-display" id="val-name">myAnim</span></label>
+                    <input type="text" id="animName" value="myAnim" oninput="updateAnimation()" />
+                </div>
+
+                <div class="form-group">
+                    <label>Duration <span class="val-display" id="val-duration">1s</span></label>
+                    <input type="range" id="animDuration" min="0.1" max="5" step="0.1" value="1"
+                        oninput="updateAnimation()" />
+                </div>
+
+                <div class="form-group">
+                    <label>Timing Function <span class="val-display" id="val-timing">ease-in-out</span></label>
+                    <select id="animTiming" oninput="updateAnimation()">
+                        <option value="linear">linear</option>
+                        <option value="ease">ease</option>
+                        <option value="ease-in">ease-in</option>
+                        <option value="ease-out">ease-out</option>
+                        <option value="ease-in-out" selected>ease-in-out</option>
+                        <option value="cubic-bezier(0.68, -0.55, 0.265, 1.55)">bounce (cubic-bezier)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Iteration Count <span class="val-display" id="val-iteration">infinite</span></label>
+                    <select id="animIteration" oninput="updateAnimation()">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="infinite" selected>infinite</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Direction <span class="val-display" id="val-direction">alternate</span></label>
+                    <select id="animDirection" oninput="updateAnimation()">
+                        <option value="normal">normal</option>
+                        <option value="reverse">reverse</option>
+                        <option value="alternate" selected>alternate</option>
+                        <option value="alternate-reverse">alternate-reverse</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="middle-panel">
+            <div class="grid-bg"></div>
+            <div class="anim-target-wrapper">
+                <div class="anim-target" id="target">Preview</div>
+            </div>
+
+            <div class="timeline-controls">
+                <button class="btn-outline btn-action" onclick="replay()" style="padding: 0.5rem">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="1 4 1 10 7 10"></polyline>
+                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                    </svg>
+                    Replay
+                </button>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="editor-header">
+                <div style="font-weight: 500; font-size: 0.875rem">CSS Code</div>
+                <button class="btn-action" onclick="copyCode()">Copy CSS</button>
+            </div>
+            <pre id="code-output"></pre>
+        </div>
+    </main>
+
+    <style id="dynamic-keyframes"></style>
+
+    <script>
+        let currentKeyframes = `
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+`;
+
+        const presets = {
+            bounce: `  0%, 100% { transform: translateY(0); }\n  50% { transform: translateY(-25px); }`,
+            pulse: `  0% { transform: scale(1); }\n  50% { transform: scale(1.1); }\n  100% { transform: scale(1); }`,
+            spin: `  0% { transform: rotate(0deg); }\n  100% { transform: rotate(360deg); }`,
+            fade: `  0% { opacity: 0; }\n  100% { opacity: 1; }`,
+            slide: `  0% { transform: translateY(50px); opacity: 0; }\n  100% { transform: translateY(0); opacity: 1; }`,
+            shake: `  0%, 100% { transform: translateX(0); }\n  25% { transform: translateX(-10px); }\n  75% { transform: translateX(10px); }`
+        };
+
+        function applyPreset(type) {
+            currentKeyframes = presets[type];
+            updateAnimation();
+            replay();
+        }
+
+        function updateAnimation() {
+            const name = document.getElementById("animName").value;
+            const duration = document.getElementById("animDuration").value + "s";
+            const timing = document.getElementById("animTiming").value;
+            const iteration = document.getElementById("animIteration").value;
+            const direction = document.getElementById("animDirection").value;
+
+            document.getElementById("val-name").textContent = name;
+            document.getElementById("val-duration").textContent = duration;
+            document.getElementById("val-timing").textContent = timing;
+            document.getElementById("val-iteration").textContent = iteration;
+            document.getElementById("val-direction").textContent = direction;
+
+            const cssRule = `animation: ${name} ${duration} ${timing} 0s ${iteration} ${direction} forwards;`;
+
+            const target = document.getElementById("target");
+            target.style.cssText = cssRule;
+
+            const keyframesCSS = `@keyframes ${name} {\n${currentKeyframes}\n}`;
+            document.getElementById("dynamic-keyframes").textContent = keyframesCSS;
+
+            renderCode(name, cssRule, keyframesCSS);
+        }
+
+        function replay() {
+            const target = document.getElementById("target");
+            target.style.animation = "none";
+            target.offsetHeight; // trigger reflow
+            updateAnimation();
+        }
+
+        function renderCode(name, cssRule, keyframesCSS) {
+            let html = `<span class="token-selector">.animated-element</span> {\n`;
+            html += `  <span class="token-property">animation</span>: <span class="token-value">${name} ${document.getElementById("animDuration").value}s ${document.getElementById("animTiming").value} ${document.getElementById("animIteration").value} ${document.getElementById("animDirection").value}</span>;\n`;
+            html += `}\n\n`;
+
+            html += `<span class="token-keyword">@keyframes</span> <span class="token-selector">${name}</span> {\n`;
+
+            const lines = currentKeyframes.split("\n");
+            lines.forEach((line) => {
+                if (line.trim() === "") return;
+                const parts = line.split("{");
+                if (parts.length > 1) {
+                    html += `  <span class="token-value">${parts[0].trim()}</span> { <span class="token-property">${parts[1].replace("}", "").trim()}</span> }\n`;
+                }
+            });
+            html += `}`;
+
+            document.getElementById("code-output").innerHTML = html;
+            window.rawCode = `.animated-element {\n  ${cssRule}\n}\n\n${keyframesCSS}`;
+        }
+
+        function copyCode() {
+            navigator.clipboard.writeText(window.rawCode);
+            alert("CSS Copied to clipboard!");
+        }
+
+        // Initialize
+        updateAnimation();
+    </script>
+</body>
+
+</html>
