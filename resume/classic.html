@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jane Doe — Resume</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 15mm 20mm;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 10.5pt;
+            line-height: 1.5;
+            color: #1a1a1a;
+            background: #f5f5f5;
+        }
+
+        .page {
+            max-width: 210mm;
+            margin: 2rem auto;
+            background: #fff;
+            padding: 40px 48px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #2563eb;
+        }
+
+        h1 {
+            font-size: 22pt;
+            font-weight: 700;
+            color: #111;
+            letter-spacing: -0.02em;
+            margin-bottom: 2px;
+        }
+
+        .title {
+            font-size: 11pt;
+            color: #2563eb;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .contact-line {
+            font-size: 9pt;
+            color: #555;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 4px 16px;
+        }
+
+        .contact-line a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 18px;
+        }
+
+        h2 {
+            font-size: 11pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #2563eb;
+            border-bottom: 1px solid #d1d5db;
+            padding-bottom: 3px;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 10.5pt;
+            font-weight: 600;
+            color: #111;
+        }
+
+        .description {
+            font-size: 10pt;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        ul {
+            padding-left: 18px;
+            margin-bottom: 8px;
+        }
+
+        li {
+            font-size: 10pt;
+            color: #333;
+            margin-bottom: 2px;
+        }
+
+        /* Entries (experience, education, volunteer) */
+        .entry {
+            margin-bottom: 14px;
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .entry-header h3 {
+            flex: 1;
+        }
+
+        .entry-header .dates {
+            font-size: 9pt;
+            color: #666;
+            white-space: nowrap;
+        }
+
+        .company {
+            font-size: 10pt;
+            color: #444;
+            font-weight: 500;
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 24px;
+        }
+
+        .skill-group {
+            margin-bottom: 6px;
+        }
+
+        .skill-group h3 {
+            font-size: 9.5pt;
+            color: #2563eb;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .skill-list {
+            font-size: 10pt;
+            color: #333;
+        }
+
+        /* Certifications */
+        .cert-item {
+            margin-bottom: 6px;
+        }
+
+        .cert-name {
+            font-weight: 600;
+            font-size: 10pt;
+        }
+
+        .cert-meta {
+            font-size: 9pt;
+            color: #666;
+        }
+
+        /* Languages */
+        .lang-list {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: 10pt;
+        }
+
+        .lang-name {
+            font-weight: 600;
+        }
+
+        .lang-level {
+            color: #666;
+            font-size: 9pt;
+        }
+
+        /* Publications */
+        .pub-item {
+            margin-bottom: 6px;
+            font-size: 10pt;
+        }
+
+        .pub-item a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .pub-meta {
+            font-size: 9pt;
+            color: #666;
+        }
+
+        /* Awards */
+        .award-item {
+            margin-bottom: 6px;
+        }
+
+        .award-name {
+            font-weight: 600;
+            font-size: 10pt;
+        }
+
+        .award-meta {
+            font-size: 9pt;
+            color: #666;
+        }
+
+        /* Testimonials */
+        .testimonial {
+            margin-bottom: 12px;
+            padding: 10px 14px;
+            border-left: 3px solid #2563eb;
+            background: #f8fafc;
+        }
+
+        .testimonial blockquote {
+            font-size: 10pt;
+            color: #333;
+            font-style: italic;
+            margin-bottom: 4px;
+        }
+
+        .testimonial cite {
+            font-size: 9pt;
+            color: #666;
+            font-style: normal;
+        }
+
+        /* Interests */
+        .interests-list {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .interest-tag {
+            font-size: 9pt;
+            padding: 3px 10px;
+            border-radius: 999px;
+            background: #eff6ff;
+            color: #2563eb;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 700px) {
+            .page {
+                margin: 0;
+                padding: 24px 20px;
+                box-shadow: none;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .entry-header {
+                flex-direction: column;
+            }
+        }
+
+        /* Print */
+        @media print {
+            body {
+                background: #fff;
+                font-size: 10pt;
+            }
+
+            .page {
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+                max-width: none;
+            }
+
+            a {
+                color: #000;
+                text-decoration: none;
+            }
+
+            header {
+                border-bottom-color: #000;
+            }
+
+            h2 {
+                color: #000;
+                border-bottom-color: #999;
+            }
+
+            .title {
+                color: #333;
+            }
+
+            .contact-line a {
+                color: #333;
+            }
+
+            h2 {
+                break-after: avoid;
+            }
+
+            .entry {
+                break-inside: avoid;
+            }
+
+            section {
+                break-inside: avoid;
+            }
+
+            .testimonial {
+                background: #f8f8f8;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+
+        <header>
+            <h1>Jane Doe</h1>
+            <div class="title">Senior Full Stack Developer</div>
+            <div class="contact-line">
+                <a href="mailto:jane@example.com">jane@example.com</a>
+                <span>+1-555-0123</span>
+                <a href="https://example.com/">https://example.com/</a>
+                <a href="https://example.com/">GitHub</a><a href="https://example.com/">LinkedIn</a><a href="https://example.com/">Twitter / X</a><a href="https://example.com/">Blog</a>
+                <span>San Francisco, California, United States (Remote)</span>
+            </div>
+        </header>
+
+        <section>
+            <h2>Summary</h2>
+            <p class="description">Experienced full stack developer specializing in React, Node.js, and cloud architecture. Passionate about open source, developer tooling, and building products that make developers&#x27; lives easier. Speaker at 10+ conferences, maintainer of 3 popular open source projects with 15K+ combined GitHub stars.</p>
+        </section>
+
+        <section>
+            <h2>Experience</h2>
+            <div class="entry">
+                <div class="entry-header">
+                    <h3>Senior Full Stack Developer</h3>
+                    <span class="dates">Mar 2022 — Present</span>
+                </div>
+                <div class="company">TechCorp Inc. | San Francisco, CA</div>
+                <p class="description">Leading the frontend architecture team for a B2B SaaS platform serving 50K+ enterprise users.</p>
+                <ul>
+                    <li>Architected a micro-frontend system that reduced deploy times by 60% and enabled independent team releases</li><li>Led migration from legacy jQuery codebase to React, improving page load performance by 40%</li><li>Built a real-time collaboration engine using WebSockets serving 10K concurrent connections</li><li>Mentored 5 junior developers through structured code review and pair programming sessions</li>
+                </ul>
+            </div>
+            <div class="entry">
+                <div class="entry-header">
+                    <h3>Full Stack Developer</h3>
+                    <span class="dates">Jun 2019 — Feb 2022</span>
+                </div>
+                <div class="company">StartupXYZ | Remote</div>
+                <p class="description">Core developer at a Series A fintech startup building payment infrastructure.</p>
+                <ul>
+                    <li>Built the merchant onboarding flow from scratch, reducing signup time from 2 days to 15 minutes</li><li>Designed and implemented a webhook delivery system processing 1M+ events daily with 99.97% reliability</li><li>Introduced end-to-end testing with Cypress, reducing production bugs by 35%</li>
+                </ul>
+            </div>
+            <div class="entry">
+                <div class="entry-header">
+                    <h3>Frontend Developer</h3>
+                    <span class="dates">Jan 2017 — May 2019</span>
+                </div>
+                <div class="company">WebAgency Co. | New York, NY</div>
+                <p class="description">Built responsive web applications for enterprise clients across healthcare, finance, and retail.</p>
+                <ul>
+                    <li>Delivered 12+ client projects on time and within budget</li><li>Built an internal component library used across 8 projects, reducing development time by 30%</li><li>Introduced automated accessibility testing, achieving WCAG 2.1 AA compliance across all projects</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Education</h2>
+            <div class="entry">
+                <div class="entry-header">
+                    <h3>Bachelor of Science in Computer Science</h3>
+                    <span class="dates">2012 — 2016</span>
+                </div>
+                <div class="company">University of California, Berkeley | GPA: 3.8 / 4.0</div>
+                <ul>
+                    <li>Magna Cum Laude</li><li>Dean&#x27;s List (6 semesters)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-group">
+                    <h3>Frontend</h3>
+                    <div class="skill-list">JavaScript / TypeScript, React / Next.js, HTML5 &amp; CSS3, Tailwind CSS, Vue.js</div>
+                </div>
+                <div class="skill-group">
+                    <h3>Backend</h3>
+                    <div class="skill-list">Node.js, Python, PostgreSQL, Redis, GraphQL</div>
+                </div>
+                <div class="skill-group">
+                    <h3>DevOps &amp; Cloud</h3>
+                    <div class="skill-list">AWS (EC2, S3, Lambda, RDS), Docker &amp; Kubernetes, CI/CD (GitHub Actions, Jenkins), Terraform</div>
+                </div>
+                <div class="skill-group">
+                    <h3>Tools &amp; Practices</h3>
+                    <div class="skill-list">Git &amp; GitHub, Agile / Scrum, TDD / Testing, System Design</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Projects</h2>
+            <div class="entry">
+                <div class="entry-header">
+                    <h3>DevDash — Developer productivity dashboard</h3>
+                    <span class="dates">2026</span>
+                </div>
+                <p class="description">An open-source developer dashboard that aggregates GitHub activity, CI/CD pipeline status, and infrastructure monitoring into a single real-time view. Built for teams that want visibility without context-switching.</p>
+                <ul>
+                    <li>2,500+ GitHub stars</li><li>Featured in JavaScript Weekly and Node Weekly</li><li>Used by 500+ development teams worldwide</li>
+                </ul>
+            </div>
+            <div class="entry">
+                <div class="entry-header">
+                    <h3>SnapCSS — Visual CSS debugging tool</h3>
+                    <span class="dates">2026</span>
+                </div>
+                <p class="description">A browser extension that lets you visually inspect, edit, and export CSS in real time. Think DevTools, but focused entirely on design iteration.</p>
+                <ul>
+                    <li>8,000+ Chrome Web Store installs</li><li>4.8-star rating from 200+ reviews</li>
+                </ul>
+            </div>
+            <div class="entry">
+                <div class="entry-header">
+                    <h3>Notely — Markdown note-taking PWA</h3>
+                    <span class="dates">2026</span>
+                </div>
+                <p class="description">An offline-first Progressive Web App for Markdown note-taking with real-time sync, full-text search, and nested folder organization.</p>
+                <ul>
+                    <li>Works entirely offline with automatic sync when online</li><li>Conflict-free real-time collaboration using CRDTs</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Certifications</h2>
+            <div class="cert-item">
+                <span class="cert-name">AWS Solutions Architect — Associate</span>
+                <span class="cert-meta"> — Amazon Web Services, Jan 2024</span>
+            </div>
+            <div class="cert-item">
+                <span class="cert-name">Google Cloud Professional Developer</span>
+                <span class="cert-meta"> — Google Cloud, Jun 2023</span>
+            </div>
+        </section>
+
+        <section>
+            <h2>Publications</h2>
+            <div class="pub-item">
+                <a href="https://example.com/">Scaling React Applications: Patterns and Anti-Patterns</a>
+                <span class="pub-meta"> — Smashing Magazine, Mar 2025</span>
+            </div>
+            <div class="pub-item">
+                <a href="https://example.com/">The Case for Server Components in 2025</a>
+                <span class="pub-meta"> — CSS-Tricks, Jan 2025</span>
+            </div>
+        </section>
+
+        <section>
+            <h2>Languages</h2>
+            <div class="lang-list">
+                <span><span class="lang-name">English</span> <span
+                        class="lang-level">(native)</span></span><span><span class="lang-name">Spanish</span> <span
+                        class="lang-level">(conversational)</span></span><span><span class="lang-name">Japanese</span> <span
+                        class="lang-level">(basic)</span></span>
+            </div>
+        </section>
+
+        <section>
+            <h2>Volunteer</h2>
+            <div class="entry">
+                <div class="entry-header">
+                    <h3>Volunteer Developer</h3>
+                    <span class="dates">Jan 2023 — Present</span>
+                </div>
+                <div class="company">Code for America</div>
+                <p class="description">Building open-source civic tech tools for local government transparency and public data access.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Awards</h2>
+            <div class="award-item">
+                <span class="award-name">Open Source Contributor of the Year</span>
+                <span class="award-meta"> — DevAwards, 2025</span>
+                <div class="description">Recognized for significant open source contributions to the JavaScript ecosystem</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Testimonials</h2>
+            <div class="testimonial">
+                <blockquote>"Jane is one of the most talented developers I&#x27;ve had the pleasure of working with. Her ability to break down complex architectural problems into clean, maintainable solutions is exceptional."</blockquote>
+                <cite>— John Smith, CTO at TechCorp Inc.</cite>
+            </div>
+            <div class="testimonial">
+                <blockquote>"She didn&#x27;t just write code — she elevated our entire engineering culture. Her code reviews alone made every developer on the team better."</blockquote>
+                <cite>— Sarah Chen, VP of Engineering at StartupXYZ</cite>
+            </div>
+        </section>
+
+        <section>
+            <h2>Interests</h2>
+            <div class="interests-list">
+                <span class="interest-tag">Open Source</span><span class="interest-tag">Developer Tooling</span><span class="interest-tag">System Design</span><span class="interest-tag">Rock Climbing</span><span class="interest-tag">Specialty Coffee</span><span class="interest-tag">Photography</span>
+            </div>
+        </section>
+
+    </div>
+    <footer
+        style="text-align:center;padding:1.5rem;font-size:8pt;color:#999;border-top:1px solid #e5e7eb;margin-top:1rem">
+        <p>Built with <a href="https://github.com/Aditya8369/OpenPlayGround" style="color:#2563eb;text-decoration:none">One File Tools</a></p>
+    </footer>
+</body>
+
+</html>
