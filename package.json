@@ -1,5 +1,5 @@
 {
-    "name": "one-file-tools",
+    "name": "OpenPlayGround",
     "version": "1.0.0",
     "description": "A collection of useful developer tools, each built as a single HTML file.",
     "private": true,
@@ -14,8 +14,8 @@
         "format": "prettier --write tools/*.html",
         "prepare": "husky"
     },
-    "author": "Praveen Kumar Purushothaman <praveen@praveen.science> (https://praveen.science)",
-    "license": "Unlicense",
+    "author": "Aditya Mahajan ",
+    "license": "MIT",
     "devDependencies": {
         "handlebars": "^4.7.9",
         "husky": "^9.1.7",
