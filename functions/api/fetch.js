@@ -4,6 +4,7 @@ export async function onRequestGet(context) {
     const origin = request.headers.get("origin");
     const referer = request.headers.get("referer");
 
+    
     // Validate that the request originates from our own domain (or localhost during dev)
     let isAllowed = true;
     if (origin) {
